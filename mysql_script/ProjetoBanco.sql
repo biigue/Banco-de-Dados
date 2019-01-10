@@ -5,24 +5,21 @@ use reservaVoo;
 -- Tabelas
 
 create table reserva(
--- codigoReserva pk
-codReserva integer auto_increment not null,
+codReserva integer not null,
 passageiro varchar(20),
 prazo date,
 primary key (codReserva)
--- n sei se o prazo ta certo sendo date
 );
-
--- dar uma olhada nos relacionamentos/chaves estrangeiras pra ver se ta certo.
--- ver se usei a on delete e on update certo ou ver outras formas de usar ele
 
 
 create table rvs_trecho(
-data date not null,
+data date not null ,
 codReserva integer,
 idAssento integer,
 idTrecho integer,
 primary key (data)
+
+
 
 );
 
@@ -33,7 +30,7 @@ primary key (numero)
 );
 
 create table horario(
-diaSemana char(13) not null,
+diaSemana char(13)  not null,
 horarioPartida varchar(20),
 horarioChegada varchar(20),
 idTrecho integer,
@@ -41,7 +38,7 @@ primary key (diaSemana)
 );
 
 create table voo(
-numero integer not null,
+numero integer not null ,
 primary key (numero)
 
 );
@@ -56,7 +53,7 @@ primary key (idTrecho)
 );
 
 create table aeroporto(
-codAeroporto integer,
+codAeroporto integer not null,
 nomeAeroporto varchar(20),
 codCidade integer,
 primary key (codAeroporto)
@@ -64,14 +61,14 @@ primary key (codAeroporto)
 );
 
 create table cidade(
-codCidade integer,
+codCidade integer not null,
 nomeCidade varchar(20),
 paisCidade varchar(20),
 primary key (codCidade)
 );
 
 create table tipoAeronave(
-codAeronave integer,
+codAeronave integer not null,
 descricaoAeronave varchar(200),
 primary key (codAeronave)
 );
@@ -84,22 +81,51 @@ primary key (codAeronave, idAssento)
 
 );
 
+-- chave estrangeira
 
-alter table rvs_trecho add foreign key (codReserva) references reserva (codReserva);
-alter table rvs_trecho add foreign key (idAssento) references assento (numero);
-alter table rvs_trecho add foreign key (idTrecho) references trecho (idTrecho);
+alter table rvs_trecho add foreign key (codReserva) references reserva (codReserva)
+on delete cascade
+on update cascade;
 
-alter table horario add foreign key(idTrecho) references trecho(idTrecho);
+alter table rvs_trecho add foreign key (idAssento) references assento (numero)
+on delete cascade
+on update cascade;
 
-alter table trecho add foreign key(numero) references voo(numero);
-alter table trecho add foreign key(codAeronave) references tipoAeronave(codAeronave);
-alter table trecho add foreign key(origem) references aeroporto(codAeroporto);
-alter table trecho add foreign key(destino) references aeroporto(codAeroporto);
+alter table rvs_trecho add foreign key (idTrecho) references trecho (idTrecho)
+on delete cascade
+on update cascade;
 
-alter table aeroporto add foreign key(codCidade) references cidade(codCidade);
+alter table horario add foreign key(idTrecho) references trecho(idTrecho)
+on delete cascade
+on update cascade;
 
-alter table tipoaeronave_assento add foreign key(codAeronave) references tipoAeronave(codAeronave);
-alter table tipoaeronave_assento add foreign key(idAssento) references assento(numero);
+alter table trecho add foreign key(numero) references voo(numero)
+on delete cascade
+on update cascade;
+
+alter table trecho add foreign key(codAeronave) references tipoAeronave(codAeronave)
+on delete cascade
+on update cascade;
+
+alter table trecho add foreign key(origem) references aeroporto(codAeroporto)
+on delete cascade
+on update cascade;
+
+alter table trecho add foreign key(destino) references aeroporto(codAeroporto)
+on delete cascade
+on update cascade;
+
+alter table aeroporto add foreign key(codCidade) references cidade(codCidade)
+on delete cascade
+on update cascade;
+
+alter table tipoaeronave_assento add foreign key(codAeronave) references tipoAeronave(codAeronave)
+on delete cascade
+on update cascade;
+
+alter table tipoaeronave_assento add foreign key(idAssento) references assento(numero)
+on delete cascade
+on update cascade;
 
 
 
