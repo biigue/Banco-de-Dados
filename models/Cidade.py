@@ -7,7 +7,7 @@ class Cidade:
     def getCodigo(self):
         return self._codigo
 
-    def setCodeigo(self, codigo):
+    def setCodigo(self, codigo):
         self._codigo = codigo
 
     def getNome(self):
