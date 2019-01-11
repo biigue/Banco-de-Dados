@@ -73,6 +73,29 @@ def deleteCidade(cidade):
         raise Exception(e)
 
 
+def getCidade(id):
+
+    query = 'SELECT * FROM cidade WHERE codCidade = %s'
+    args = (id, )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        cidade = Cidade(row[0], row[1], row[2])
+
+        cursor.close()
+        conn.close()
+        return cidade
+
+    except Error as e:
+        raise Exception(e)
+
+
 def getCidades():
 
     query = 'SELECT * FROM cidade'
@@ -155,6 +178,29 @@ def deleteAssento(assento):
 
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getAssento(id):
+
+    query = 'SELECT * FROM assento WHERE numero = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        assento = Assento(row[0], row[1])
+
+        cursor.close()
+        conn.close()
+        return assento
 
     except Error as e:
         raise Exception(e)
@@ -248,6 +294,29 @@ def deleteHorario(horario):
         raise Exception(e)
 
 
+def getHorario(id):
+
+    query = 'SELECT * FROM horario WHERE diaSemana = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        horario = Horario(row[0], row[1], row[2], row[3])
+
+        cursor.close()
+        conn.close()
+        return horario
+
+    except Error as e:
+        raise Exception(e)
+
+
 def getHorarios():
 
     query = 'SELECT * FROM horario'
@@ -331,6 +400,29 @@ def deleteReserva(reserva):
 
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getReserva(id):
+
+    query = 'SELECT * FROM reserva WHERE codReserva = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        horario = Horario(row[0], row[1], row[2])
+
+        cursor.close()
+        conn.close()
+        return horario
 
     except Error as e:
         raise Exception(e)
@@ -424,6 +516,29 @@ def deleteAeroporto(aeroporto):
         raise Exception(e)
 
 
+def getReserva(id):
+
+    query = 'SELECT * FROM aeroport WHERE codAeroporto = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        aeroporto = Aeroporto(row[0], row[1], row[2])
+
+        cursor.close()
+        conn.close()
+        return aeroporto
+
+    except Error as e:
+        raise Exception(e)
+
+
 def getAeroportos():
 
     query = 'SELECT * FROM aeroporto'
@@ -486,6 +601,29 @@ def deleteVoo(voo):
 
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getVoo(id):
+
+    query = 'SELECT * FROM voo WHERE numero = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        voo = Voo(row[0])
+
+        cursor.close()
+        conn.close()
+        return voo
 
     except Error as e:
         raise Exception(e)
