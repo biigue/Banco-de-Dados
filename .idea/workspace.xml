@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d49bb2f1-aafe-46f7-bd4c-ca02674cbd6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/controller/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/config.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/dbreader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Cidade.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/Cidade.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Horario.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/Horario.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,55 +17,56 @@
     <SUITE FILE_PATH="coverage/Projeto_FBD$reservaView.coverage" NAME="reservaView Coverage Results" MODIFIED="1547071286625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/view" />
     <SUITE FILE_PATH="coverage/Projeto_FBD$view__1_.coverage" NAME="view (1) Coverage Results" MODIFIED="1547071402481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/view" />
     <SUITE FILE_PATH="coverage/Projeto_FBD$view.coverage" NAME="view Coverage Results" MODIFIED="1547071435449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/view" />
-    <SUITE FILE_PATH="coverage/Projeto_FBD$controller.coverage" NAME="controller Coverage Results" MODIFIED="1547147776793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/controller" />
+    <SUITE FILE_PATH="coverage/Projeto_FBD$controller.coverage" NAME="controller Coverage Results" MODIFIED="1547165949983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/controller" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1814463598">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.19" value="1" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="ini" value="1" />
-          <entry key="py" value="16" />
+          <entry key="py" value="17" />
           <entry key="sql" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Ini" value="1" />
-          <entry key="Python" value="16" />
+          <entry key="Python" value="17" />
           <entry key="SQL" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dummy" value="30" />
+          <entry key="dummy" value="38" />
           <entry key="ini" value="20" />
-          <entry key="py" value="3850" />
+          <entry key="py" value="5384" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Ini" value="20" />
-          <entry key="PLAIN_TEXT" value="30" />
-          <entry key="Python" value="3850" />
+          <entry key="PLAIN_TEXT" value="38" />
+          <entry key="Python" value="5384" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/config.ini">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -85,12 +83,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="140" column="24" selection-start-line="140" selection-start-column="24" selection-end-line="140" selection-end-column="24" />
+            <state relative-caret-position="4896">
+              <caret line="288" column="23" selection-start-line="288" selection-start-column="23" selection-end-line="288" selection-end-column="23" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
-                <marker date="1547147675041" expanded="true" signature="2380:2786" ph="..." />
+                <marker date="1547165986013" expanded="true" signature="1565:2141" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/Horario.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="14" lean-forward="true" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -98,8 +105,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysql_script/ProjetoBanco.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-289">
-              <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+            <state relative-caret-position="-184">
+              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -122,7 +129,6 @@
         <option value="$PROJECT_DIR$/view/view.py" />
         <option value="$PROJECT_DIR$/models/Aeroporto.py" />
         <option value="$PROJECT_DIR$/models/Voo.py" />
-        <option value="$PROJECT_DIR$/models/Horario.py" />
         <option value="$PROJECT_DIR$/models/Assento.py" />
         <option value="$PROJECT_DIR$/models/TipoAeronave.py" />
         <option value="$PROJECT_DIR$/models/Reserva.py" />
@@ -132,6 +138,7 @@
         <option value="$PROJECT_DIR$/controller/dbreader.py" />
         <option value="$PROJECT_DIR$/models/Cidade.py" />
         <option value="$PROJECT_DIR$/controller/config.ini" />
+        <option value="$PROJECT_DIR$/models/Horario.py" />
         <option value="$PROJECT_DIR$/controller/controller.py" />
       </list>
     </option>
@@ -142,7 +149,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -154,6 +161,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -180,7 +188,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -278,15 +285,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25416037" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25692964" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23114754" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23101953" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -364,13 +371,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/Horario.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Voo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -385,23 +385,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/python_mysql_dbconfig.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/dbreader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/python_mysql_dbconfig.py" />
     <entry file="file://$PROJECT_DIR$/models/Cidade.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -412,20 +396,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controller/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/dbreader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Horario.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="14" lean-forward="true" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysql_script/ProjetoBanco.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        <state relative-caret-position="-184">
+          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="140" column="24" selection-start-line="140" selection-start-column="24" selection-end-line="140" selection-end-column="24" />
+        <state relative-caret-position="4896">
+          <caret line="288" column="23" selection-start-line="288" selection-start-column="23" selection-end-line="288" selection-end-column="23" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
-            <marker date="1547147675041" expanded="true" signature="2380:2786" ph="..." />
+            <marker date="1547165986013" expanded="true" signature="1565:2141" ph="..." />
           </folding>
         </state>
       </provider>
