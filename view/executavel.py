@@ -41,10 +41,10 @@ class TabelaReserva(Toplevel):
         self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=3)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
+        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
         self.botaoExcluir.grid(column=2, row=4, padx=(100, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
+        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=4)
 
         #log
@@ -106,6 +106,7 @@ class TabelaReserva(Toplevel):
         codReserva = (self.entradacodReserva.get())  # pega as entradas
         passageiro = (self.entradapass.get())
         prazo = (self.entradaprazo.get())
+        #enviar o comando pro banco e listar na lista de baixo
 
 
     #no buscar usar
