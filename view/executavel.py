@@ -2,6 +2,7 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+import tktable
 
 class TabelaReserva(Toplevel):
     def __init__(self, master=None):
@@ -55,6 +56,11 @@ class TabelaReserva(Toplevel):
 
 
         #visualizar a tabela de retorno
+        # table = tktable.Table(parent,
+        #                       rows=5,
+        #                       cols=5
+        #                       )
+        # table.pack()
 
 
 
@@ -69,6 +75,9 @@ class TabelaReserva(Toplevel):
         self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
         #else
         #self.var.set('>>>Log do Erro')
+
+    #no buscar usar
+    #self.entryF.insert(0,str(fFar))
 
 
 class Tabela_Reserva_Trecho(Toplevel):
