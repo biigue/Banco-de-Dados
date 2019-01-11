@@ -86,8 +86,11 @@ def getCidade(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        cidade = Cidade(row[0], row[1], row[2])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            cidade = Cidade(row[0], row[1], row[2])
+        else:
+            cidade = None
 
         cursor.close()
         conn.close()
@@ -196,8 +199,11 @@ def getAssento(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        assento = Assento(row[0], row[1])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            assento = Assento(row[0], row[1])
+        else:
+            assento = None
 
         cursor.close()
         conn.close()
@@ -307,8 +313,11 @@ def getHorario(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        horario = Horario(row[0], row[1], row[2], row[3])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            horario = Horario(row[0], row[1], row[2], row[3])
+        else:
+            horario = None
 
         cursor.close()
         conn.close()
@@ -418,12 +427,15 @@ def getReserva(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        horario = Horario(row[0], row[1], row[2])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            reserva = Reserva(row[0], row[1], row[2])
+        else:
+            reserva = None
 
         cursor.close()
         conn.close()
-        return horario
+        return reserva
 
     except Error as e:
         raise Exception(e)
@@ -529,8 +541,11 @@ def getAeroporto(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        aeroporto = Aeroporto(row[0], row[1], row[2])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            aeroporto = Aeroporto(row[0], row[1], row[2])
+        else:
+            aeroporto = None
 
         cursor.close()
         conn.close()
@@ -619,8 +634,11 @@ def getVoo(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        voo = Voo(row[0])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            voo = Voo(row[0])
+        else:
+            voo = None
 
         cursor.close()
         conn.close()
@@ -730,8 +748,11 @@ def getTipoAeronave(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        tipoAeronave = TipoAeronave(row[0], row[1])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            tipoAeronave = TipoAeronave(row[0], row[1])
+        else:
+            tipoAeronave = None
 
         cursor.close()
         conn.close()
@@ -820,8 +841,11 @@ def getTipoAeronave(codAeronave, idAssento):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        tipoAeronaveAssento = TipoAeronaveAssento(row[0], row[1])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            tipoAeronaveAssento = TipoAeronaveAssento(row[0], row[1])
+        else:
+            tipoAeronaveAssento = None
 
         cursor.close()
         conn.close()
@@ -932,8 +956,11 @@ def getTrecho(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        trecho = Trecho(row[0], row[1], row[2], row[3], row[4])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            trecho = Trecho(row[0], row[1], row[2], row[3], row[4])
+        else:
+            trecho = None
 
         cursor.close()
         conn.close()
@@ -1042,8 +1069,11 @@ def getReservaTrecho(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        row = cursor.fetchone()
-        reservaTrecho = ReservaTrecho(row[0], row[1], row[2], row[3])
+        if cursor.rowcount > 0:
+            row = cursor.fetchone()
+            reservaTrecho = ReservaTrecho(row[0], row[1], row[2], row[3])
+        else:
+            reservaTrecho = None
 
         cursor.close()
         conn.close()
