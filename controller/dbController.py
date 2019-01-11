@@ -1,5 +1,5 @@
 from mysql.connector import MySQLConnection, Error
-from dbreader import read_db_config
+from controller.dbreader import read_db_config
 from models.Cidade import Cidade
 from models.Assento import Assento
 from models.Horario import Horario
@@ -85,10 +85,7 @@ def getCidades():
         cidades = []
         rows = cursor.fetchall()
         for row in rows:
-            cidade = Cidade()
-            cidade.setCodigo(row[0])
-            cidade.setNome(row[1])
-            cidade.setPais(row[2])
+            cidade = Cidade(row[0], row[1], row[2])
             cidades.append(cidade)
 
     except Error as e:
@@ -180,9 +177,7 @@ def getAssentos():
         assentos = []
         rows = cursor.fetchall()
         for row in rows:
-            assento = Assento()
-            assento.setNumero(row[0])
-            assento.setClasse(row[1])
+            assento = Assento(row[0], row[1])
             assentos.append(assento)
 
     except Error as e:
@@ -274,11 +269,7 @@ def getHorarios():
         horarios = []
         rows = cursor.fetchall()
         for row in rows:
-            horario = Horario()
-            horario.setDiaSemana(row[0])
-            horario.setHorarioPartida(row[1])
-            horario.setHorarioChegada(row[2])
-            horario.setIdTrecho(row[3])
+            horario = Horario(row[0], row[1], row[2], row[3])
             horarios.append(horario)
 
     except Error as e:
@@ -370,10 +361,7 @@ def getReservas():
         reservas = []
         rows = cursor.fetchall()
         for row in rows:
-            reserva = Reserva()
-            reserva.setCodigoReserva(row[0])
-            reserva.setPassageiro(row[1])
-            reserva.setPrazo(row[2])
+            reserva = Reserva(row[0], row[1], row[2])
             reservas.append(reserva)
 
     except Error as e:
@@ -383,4 +371,3 @@ def getReservas():
         cursor.close()
         conn.close()
         return reservas
-    

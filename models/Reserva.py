@@ -1,8 +1,8 @@
 class Reserva:
-    def __init__(self):
-        self._codigoReserva = None
-        self._passageiro = None
-        self._prazo = None
+    def __init__(self, codReserva = None, passageiro = None, prazo = None):
+        self._codigoReserva = codReserva
+        self._passageiro = passageiro
+        self._prazo = prazo
 
     def getCodigoReserva(self):
         return self._codigoReserva

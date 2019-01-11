@@ -1,10 +1,10 @@
 class Trecho:
-    def __init__(self):
-        self._idTrecho = None
-        self._numeroVoo = None
-        self._codigoAeronave = None
-        self._AeroportoOrigem = None
-        self._AeroportoDestino = None
+    def __init__(self, idTrecho = None, numVoo = None, codAeronave = None, aeroportoOrigem = None, aeroportoDestino = None):
+        self._idTrecho = idTrecho
+        self._numeroVoo = numVoo
+        self._codigoAeronave = codAeronave
+        self._AeroportoOrigem = aeroportoOrigem
+        self._AeroportoDestino = aeroportoDestino
 
     def getIdTrecho(self):
         return self._idTrecho

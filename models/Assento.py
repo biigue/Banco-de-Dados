@@ -1,7 +1,7 @@
 class Assento:
-    def __init__(self):
-        self._numero = None
-        self._classe = None
+    def __init__(self, numero = None, classe = None):
+        self._numero = numero
+        self._classe = classe
 
     def getNumero(self):
         return self._numero

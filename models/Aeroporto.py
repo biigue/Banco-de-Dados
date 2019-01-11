@@ -1,8 +1,8 @@
 class Aeroporto:
-    def __init__(self):
-        self._codigo = None
-        self._nome = None
-        self._codigoCidade = None
+    def __init__(self, cod = None, nome = None, codCidade = None):
+        self._codigo = cod
+        self._nome = nome
+        self._codigoCidade = codCidade
 
     def getCodigo(self):
         return self._codigo

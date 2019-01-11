@@ -1,8 +1,8 @@
 class Cidade:
-    def __init__(self):
-        self._codigo = None
-        self._nome = None
-        self._pais = None
+    def __init__(self, cod = None, nome = None, pais = None):
+        self._codigo = cod
+        self._nome = nome
+        self._pais = pais
 
     def getCodigo(self):
         return self._codigo

@@ -1,9 +1,9 @@
 class ReservaTrecho:
-    def __init__(self):
-        self._data = None
-        self._codigoReserva = None
-        self._numeroAssento = None
-        self._idTrecho = None
+    def __init__(self, data = None, codReserva = None, numAssento = None, idTrecho = None):
+        self._data = data
+        self._codigoReserva = codReserva
+        self._numeroAssento = numAssento
+        self._idTrecho = idTrecho
         
     def getData(self):
         return self._data

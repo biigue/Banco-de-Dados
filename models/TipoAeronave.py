@@ -1,7 +1,7 @@
 class TipoAeronave:
-    def __init__(self):
-        self._codigo = None
-        self._descricao = None
+    def __init__(self, cod = None, desc = None):
+        self._codigo = cod
+        self._descricao = desc
 
     def getCodigo(self):
         return self._codigo

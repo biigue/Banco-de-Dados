@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 #from tkinter import tktable
+from controller.dbController import *
+from models.Reserva import Reserva
 
 class TabelaReserva(Toplevel):
     def __init__(self, master=None):
@@ -74,10 +76,11 @@ class TabelaReserva(Toplevel):
         if codReserva == '':
             self.var.set('>>>Favor insira o Código da reserva')
         else:
-
+            reserva = Reserva(codReserva, passageiro, prazo)
             self.entradacodReserva.delete(0, tk.END)
             self.entradapass.delete(0, tk.END) # apaga o campo destino
             self.entradaprazo.delete(0, tk.END)
+            insertReserva(reserva)
             #mensagem log
             self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
         #else

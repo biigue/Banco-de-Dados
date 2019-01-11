@@ -1,9 +1,9 @@
 class Horario:
-    def __init__(self):
-        self._diaSemana = None
-        self._horarioPartida = None
-        self._horarioChegada = None
-        self._idTrecho = None
+    def __init__(self, diaS = None, horP = None, horC = None, idTrecho = None):
+        self._diaSemana = diaS
+        self._horarioPartida = horP
+        self._horarioChegada = horC
+        self._idTrecho = idTrecho
 
     def getDiaSemana(self):
         return self._diaSemana

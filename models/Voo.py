@@ -1,6 +1,6 @@
 class Voo:
-    def __init__(self):
-        self._numero = None
+    def __init__(self, numero = None):
+        self._numero = numero
 
     def getNumero(self):
         return self._numero
