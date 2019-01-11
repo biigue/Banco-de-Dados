@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-import tktable
+#from tkinter import tktable
 
 class TabelaReserva(Toplevel):
     def __init__(self, master=None):
@@ -14,7 +14,7 @@ class TabelaReserva(Toplevel):
         self.geometry('480x540')
 
         #entradas
-        self.textocodReserva = tk.Label(self, text="Codígo da Reserva *")
+        self.textocodReserva = tk.Label(self, text="Codígo da Reserva(Inteiro) *")
         self.textocodReserva.grid(column=2, row=0, padx=(100, 10), pady=5)
         self.entradacodReserva = tk.Entry(self)
         self.entradacodReserva.grid(column=3, row=0,
@@ -38,7 +38,7 @@ class TabelaReserva(Toplevel):
         self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=3, padx=(100, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
+        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=3)
 
         self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
@@ -67,14 +67,46 @@ class TabelaReserva(Toplevel):
         #funcoes dos clicks
     def inserirBanco(self):
         codReserva = (self.entradacodReserva.get())  # pega as entradas
-        passageiro = (self.textopass.get())
-        prazo = (self.textoprazo.get())
+        passageiro = (self.entradapass.get())
+        prazo = (self.entradaprazo.get())
         #enviar pro banco e voltar com erro ou sucesso
         #se for sucesso
-        self.entradacodReserva.delete(0, tk.END)  # apaga o campo destino
-        self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        if codReserva == '':
+            self.var.set('>>>Favor insira o Código da reserva')
+        else:
+
+            self.entradacodReserva.delete(0, tk.END)
+            self.entradapass.delete(0, tk.END) # apaga o campo destino
+            self.entradaprazo.delete(0, tk.END)
+            #mensagem log
+            self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
         #else
         #self.var.set('>>>Log do Erro')
+
+    def clickAlterar(self):
+        codReserva = (self.entradacodReserva.get())  # pega as entradas
+        passageiro = (self.entradapass.get())
+        prazo = (self.entradaprazo.get())
+        if codReserva == '':
+            self.var.set('>>>Favor insira o Código da reserva')
+        else:
+            self.var.set('>>>Alteração Realizada')
+            self.entradacodReserva.delete(0, tk.END)
+            self.entradapass.delete(0, tk.END)  # apaga o campo destino
+            self.entradaprazo.delete(0, tk.END)
+
+    def clickDeletar(self):
+        codReserva = (self.entradacodReserva.get())  # pega as entradas
+        passageiro = (self.entradapass.get())
+        prazo = (self.entradaprazo.get())
+        if codReserva == '':
+            self.var.set('>>>Favor insira o Código da reserva')
+
+    def clickBuscar(self):
+        codReserva = (self.entradacodReserva.get())  # pega as entradas
+        passageiro = (self.entradapass.get())
+        prazo = (self.entradaprazo.get())
+
 
     #no buscar usar
     #self.entryF.insert(0,str(fFar))
