@@ -9,6 +9,7 @@ from models.Voo import Voo
 from models.TipoAeronave import TipoAeronave
 from models.Trecho import Trecho
 from models.ReservaTrecho import ReservaTrecho
+from models.TipoAeronaveAssento import TipoAeronaveAssento
 
 
 def insertCidade(cidade):
@@ -516,7 +517,7 @@ def deleteAeroporto(aeroporto):
         raise Exception(e)
 
 
-def getReserva(id):
+def getAeroporto(id):
 
     query = 'SELECT * FROM aeroport WHERE codAeroporto = %s'
     args = (id,)
@@ -717,6 +718,29 @@ def deleteTipoAeronave(tipoAeronave):
         raise Exception(e)
 
 
+def getTipoAeronave(id):
+
+    query = 'SELECT * FROM tipoAeronave WHERE codAeronave = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        tipoAeronave = TipoAeronave(row[0], row[1])
+
+        cursor.close()
+        conn.close()
+        return tipoAeronave
+
+    except Error as e:
+        raise Exception(e)
+
+
 def getTipoAeronaves():
 
     query = 'SELECT * FROM tipoAeronave'
@@ -728,15 +752,15 @@ def getTipoAeronaves():
         cursor = conn.cursor()
         cursor.execute(query)
 
-        aeroportos = []
+        tipoAeronaves = []
         rows = cursor.fetchall()
         for row in rows:
-            aeroporto = Aeroporto(row[0], row[1], row[2])
-            aeroportos.append(aeroporto)
+            tipoAeronave = TipoAeronave(row[0], row[1])
+            tipoAeronaves.append(tipoAeronave)
 
         cursor.close()
         conn.close()
-        return aeroportos
+        return tipoAeronaves
 
     except Error as e:
         raise Exception(e)
@@ -784,6 +808,29 @@ def deleteTipoAeronaveAssento(tipoAeronaveAssento):
         raise Exception(e)
 
 
+def getTipoAeronave(codAeronave, idAssento):
+
+    query = 'SELECT * FROM tipoaeronave_assento WHERE codAeronave = %s, idAssento = %s'
+    args = (codAeronave, idAssento)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        tipoAeronaveAssento = TipoAeronaveAssento(row[0], row[1])
+
+        cursor.close()
+        conn.close()
+        return tipoAeronaveAssento
+
+    except Error as e:
+        raise Exception(e)
+
+
 def getTipoAeronaveAssentos():
 
     query = 'SELECT * FROM tipoaeronave_assento'
@@ -798,7 +845,7 @@ def getTipoAeronaveAssentos():
         tipoAeronaveAssentos = []
         rows = cursor.fetchall()
         for row in rows:
-            tipoAeronaveAssento = TipoAeronave(row[0], row[1])
+            tipoAeronaveAssento = TipoAeronaveAssento(row[0], row[1])
             tipoAeronaveAssentos.append(tipoAeronaveAssento)
 
         cursor.close()
@@ -868,6 +915,29 @@ def deleteTrecho(trecho):
 
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getTrecho(id):
+
+    query = 'SELECT * FROM trecho WHERE idTrecho = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        trecho = Trecho(row[0], row[1], row[2], row[3], row[4])
+
+        cursor.close()
+        conn.close()
+        return trecho
 
     except Error as e:
         raise Exception(e)
@@ -956,6 +1026,28 @@ def deleteReservaTrecho(reservaTrecho):
 
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+def getReservaTrecho(id):
+
+    query = 'SELECT * FROM rvs_trecho WHERE dataRT = %s'
+    args = (id,)
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        row = cursor.fetchone()
+        reservaTrecho = ReservaTrecho(row[0], row[1], row[2], row[3])
+
+        cursor.close()
+        conn.close()
+        return reservaTrecho
 
     except Error as e:
         raise Exception(e)
