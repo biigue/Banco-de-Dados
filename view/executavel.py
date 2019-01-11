@@ -34,7 +34,7 @@ class TabelaReserva(Toplevel):
         #Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir")  # criamos o objeto botão
+        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=3, padx=(100, 10), pady=5)
 
         self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
@@ -46,14 +46,29 @@ class TabelaReserva(Toplevel):
         self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=4)
 
+        #log
+        self.var = StringVar()
+        self.var.set('')
+        self.log_reserva = tk.Label(self, textvariable = self.var)
+        self.log_reserva.grid(column=2, row=5, pady=10)
+
+
 
         #visualizar a tabela de retorno
 
 
 
         #funcoes dos clicks
-        def inserirBanco(self, codreserva, passageiro, prazo):
-            pass
+    def inserirBanco(self):
+        codReserva = (self.entradacodReserva.get())  # pega as entradas
+        passageiro = (self.textopass.get())
+        prazo = (self.textoprazo.get())
+        #enviar pro banco e voltar com erro ou sucesso
+        #se for sucesso
+        self.entradacodReserva.delete(0, tk.END)  # apaga o campo destino
+        self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        #else
+        #self.var.set('>>>Log do Erro')
 
 
 class Tabela_Reserva_Trecho(Toplevel):
@@ -108,7 +123,7 @@ class Tabela_Reserva_Trecho(Toplevel):
         # visualizar a tabela de retorno
 
         # funcoes dos clicks
-        def inserirBanco(self, codreserva, passageiro, prazo):
+        def inserirBanco(self):
             pass
 
 
@@ -578,3 +593,10 @@ if __name__ == '__main__':
     mainWindow = MainWindow()
 mainWindow.mainloop()
 
+
+
+#codigo pra colocar o select na entrada
+# listaValores = ["laranja", "limão", "jabuticaba", "manga"]
+# self.cbx = ttk.Combobox(self.mainframe, values=listaValores)
+# self.cbx.set("limão")
+# self.cbx.pack()
