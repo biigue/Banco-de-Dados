@@ -93,6 +93,8 @@ class TabelaReserva(Toplevel):
         if codReserva == '':
             self.var.set('>>>Favor insira o Código da reserva')
         else:
+            reserva = Reserva(codReserva, passageiro, prazo)
+            updateReserva(reserva)
             self.var.set('>>>Alteração Realizada')
             self.entradacodReserva.delete(0, tk.END)
             self.entradapass.delete(0, tk.END)  # apaga o campo destino
@@ -104,6 +106,9 @@ class TabelaReserva(Toplevel):
         prazo = (self.entradaprazo.get())
         if codReserva == '':
             self.var.set('>>>Favor insira o Código da reserva')
+        else:
+            reserva = Reserva(codReserva)
+            deleteReserva(reserva)
 
     def clickBuscar(self):
         codReserva = (self.entradacodReserva.get())  # pega as entradas

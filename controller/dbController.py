@@ -4,6 +4,11 @@ from models.Cidade import Cidade
 from models.Assento import Assento
 from models.Horario import Horario
 from models.Reserva import Reserva
+from models.Aeroporto import Aeroporto
+from models.Voo import Voo
+from models.TipoAeronave import TipoAeronave
+from models.Trecho import Trecho
+from models.ReservaTrecho import ReservaTrecho
 
 
 def insertCidade(cidade):
@@ -19,12 +24,11 @@ def insertCidade(cidade):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def updateCidade(cidade):
@@ -41,12 +45,11 @@ def updateCidade(cidade):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def deleteCidade(cidade):
@@ -63,12 +66,11 @@ def deleteCidade(cidade):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def getCidades():
@@ -88,13 +90,12 @@ def getCidades():
             cidade = Cidade(row[0], row[1], row[2])
             cidades.append(cidade)
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
         return cidades
+
+    except Error as e:
+        raise Exception(e)
 
 
 def insertAssento(assento):
@@ -111,12 +112,11 @@ def insertAssento(assento):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def updateAssento(assento):
@@ -133,13 +133,11 @@ def updateAssento(assento):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
 
+    except Error as e:
+        raise Exception(e)
 
 def deleteAssento(assento):
 
@@ -155,12 +153,11 @@ def deleteAssento(assento):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def getAssentos():
@@ -180,13 +177,12 @@ def getAssentos():
             assento = Assento(row[0], row[1])
             assentos.append(assento)
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
         return assentos
+
+    except Error as e:
+        raise Exception(e)
 
 
 def insertHorario(horario):
@@ -203,12 +199,11 @@ def insertHorario(horario):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def updateHorario(horario):
@@ -225,12 +220,11 @@ def updateHorario(horario):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def deleteHorario(horario):
@@ -247,12 +241,11 @@ def deleteHorario(horario):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def getHorarios():
@@ -272,13 +265,12 @@ def getHorarios():
             horario = Horario(row[0], row[1], row[2], row[3])
             horarios.append(horario)
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
         return horarios
+
+    except Error as e:
+        raise Exception(e)
 
 
 def insertReserva(reserva):
@@ -295,12 +287,11 @@ def insertReserva(reserva):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def updateReserva(reserva):
@@ -317,12 +308,11 @@ def updateReserva(reserva):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def deleteReserva(reserva):
@@ -339,12 +329,11 @@ def deleteReserva(reserva):
 
         conn.commit()
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
+
+    except Error as e:
+        raise Exception(e)
 
 
 def getReservas():
@@ -364,10 +353,496 @@ def getReservas():
             reserva = Reserva(row[0], row[1], row[2])
             reservas.append(reserva)
 
-    except Error as e:
-        raise Exception(e)
-
-    finally:
         cursor.close()
         conn.close()
         return reservas
+
+    except Error as e:
+        raise Exception(e)
+
+
+def insertAeroporto(aeroporto):
+
+    query = 'INSERT INTO aeroporto(codAeroporto, nomeAeroporto, codCidade) VALUES(%s, %s, %s)'
+    args = (aeroporto.getCodigo(), aeroporto.getNome(), aeroporto.getCodigoCidade())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def updateAeroporto(aeroporto):
+
+    query = 'UPDATE aeroporto SET nomeAeroporto = %s, codCidade = %s WHERE codAeroporto = %s'
+    args = (aeroporto.getNome(), aeroporto.getCodigoCidade(), aeroporto.getCodigo())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def deleteAeroporto(aeroporto):
+
+    query = 'DELETE FROM aeroporto WHERE codAeroporto = %s'
+    args = (aeroporto.getCodigo(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getAeroportos():
+
+    query = 'SELECT * FROM aeroporto'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        aeroportos = []
+        rows = cursor.fetchall()
+        for row in rows:
+            aeroporto = Aeroporto(row[0], row[1], row[2])
+            aeroportos.append(aeroporto)
+
+        cursor.close()
+        conn.close()
+        return aeroportos
+
+    except Error as e:
+        raise Exception(e)
+
+
+def insertVoo(voo):
+
+    query = 'INSERT INTO voo(numero) VALUES(%s)'
+    args = (voo.getNumero(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def deleteVoo(voo):
+
+    query = 'DELETE FROM voo WHERE numero = %s'
+    args = (voo.getNumero(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getVoos():
+
+    query = 'SELECT * FROM voo'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        voos = []
+        rows = cursor.fetchall()
+        for row in rows:
+            voo = Voo(row[0])
+            voos.append(voo)
+
+        cursor.close()
+        conn.close()
+        return voos
+
+    except Error as e:
+        raise Exception(e)
+
+
+def insertTipoAeronave(tipoAeronave):
+
+    query = 'INSERT INTO tipoAeronave(codAeronave, descricaoAeronave) VALUES(%s, %s)'
+    args = (tipoAeronave.getCodigo(), tipoAeronave.getDescricao())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def updateTipoAeronave(tipoAeronave):
+
+    query = 'UPDATE tipoAeronave SET descricaoAeronave = %s WHERE codAeronave = %s'
+    args = (tipoAeronave.getDescricao(), tipoAeronave.getCodigo())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def deleteTipoAeronave(tipoAeronave):
+
+    query = 'DELETE FROM tipoAeronave WHERE codAeronave = %s'
+    args = (tipoAeronave.getCodigo(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getTipoAeronaves():
+
+    query = 'SELECT * FROM tipoAeronave'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        aeroportos = []
+        rows = cursor.fetchall()
+        for row in rows:
+            aeroporto = Aeroporto(row[0], row[1], row[2])
+            aeroportos.append(aeroporto)
+
+        cursor.close()
+        conn.close()
+        return aeroportos
+
+    except Error as e:
+        raise Exception(e)
+
+
+def insertTipoAeronaveAssento(tipoAeronaveAssento):
+
+    query = 'INSERT INTO tipoaeronave_assento(codAeronave, idAssento) VALUES(%s, %s)'
+    args = (tipoAeronaveAssento.getCodAeronave(), tipoAeronaveAssento.getIdAssento())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def deleteTipoAeronaveAssento(tipoAeronaveAssento):
+
+    query = 'DELETE FROM tipoaeronave_assento WHERE codAeronave = %s AND idAssento = %s'
+    args = (tipoAeronaveAssento.getCodAeronave(), tipoAeronaveAssento.getIdAssento())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getTipoAeronaveAssentos():
+
+    query = 'SELECT * FROM tipoaeronave_assento'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        tipoAeronaveAssentos = []
+        rows = cursor.fetchall()
+        for row in rows:
+            tipoAeronaveAssento = TipoAeronave(row[0], row[1])
+            tipoAeronaveAssentos.append(tipoAeronaveAssento)
+
+        cursor.close()
+        conn.close()
+        return tipoAeronaveAssentos
+
+    except Error as e:
+        raise Exception(e)
+
+
+
+def insertTrecho(trecho):
+
+    query = 'INSERT INTO trecho(idTrecho, numero, codAeronave, origem, destino) VALUES(%s, %s, %s, %s, %s)'
+    args = (trecho.getIdTrecho(), trecho.getNumeroVoo(), trecho.getCodigoAeronave(), trecho.getAeroportoOrigem(), trecho.getAeroportoDestino())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def updateTrecho(trecho):
+
+    query = 'UPDATE trecho SET numero = %s, codAeronave = %s, origem = %s, destino = %s WHERE idTrecho = %s'
+    args = (trecho.getNumeroVoo(), trecho.getCodigoAeronave(), trecho.getAeroportoOrigem(), trecho.getAeroportoDestino(), trecho.getIdTrecho())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def deleteTrecho(trecho):
+
+    query = 'DELETE FROM trecho WHERE idTrecho = %s'
+    args = (trecho.getIdTrecho(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getTrechos():
+
+    query = 'SELECT * FROM trecho'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        trechos = []
+        rows = cursor.fetchall()
+        for row in rows:
+            trecho = Trecho(row[0], row[1], row[2], row[3], row[4])
+            trechos.append(trecho)
+
+        cursor.close()
+        conn.close()
+        return trechos
+
+    except Error as e:
+        raise Exception(e)
+
+
+def insertReservaTrecho(reservaTrecho):
+
+    query = 'INSERT INTO rvs_trecho(dataRT, codReserva, idAssento, idTrecho) VALUES(%s, %s, %s, %s)'
+    args = (reservaTrecho.getData(), reservaTrecho.getCodigoReserva(), reservaTrecho.getIdTrecho(), reservaTrecho.getIdTrecho())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def updateReservaTrecho(reservaTrecho):
+
+    query = 'UPDATE rvs_trecho SET codReserva = %s, idAssento = %s, idTrecho = %s WHERE dataRT = %s'
+    args = (reservaTrecho.getCodigoReserva(), reservaTrecho.getNumeroAssento(), reservaTrecho.getIdTrecho(), reservaTrecho.getData())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def deleteReservaTrecho(reservaTrecho):
+
+    query = 'DELETE FROM rvs_trecho WHERE dataRT = %s'
+    args = (reservaTrecho.getData(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Error as e:
+        raise Exception(e)
+
+
+def getReservaTrechos():
+
+    query = 'SELECT * FROM rvs_trecho'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        reservaTrechos = []
+        rows = cursor.fetchall()
+        for row in rows:
+            reservaTrecho = ReservaTrecho(row[0], row[1], row[2], row[3])
+            reservaTrechos.append(reservaTrecho)
+
+        cursor.close()
+        conn.close()
+        return reservaTrechos
+
+    except Error as e:
+        raise Exception(e)
