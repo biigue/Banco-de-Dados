@@ -7,17 +7,17 @@ use reservaVoo;
 create table reserva(
 codReserva integer not null,
 passageiro varchar(20),
-prazo date,
+prazo varchar(10),
 primary key (codReserva)
 );
 
 
 create table rvs_trecho(
-data date not null ,
+dataRT varchar(10) not null ,
 codReserva integer,
 idAssento integer,
 idTrecho integer,
-primary key (data)
+primary key (dataRT)
 
 
 

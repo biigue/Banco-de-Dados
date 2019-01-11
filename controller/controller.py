@@ -3,6 +3,7 @@ from dbreader import read_db_config
 from models.Cidade import Cidade
 from models.Assento import Assento
 from models.Horario import Horario
+from models.Reserva import Reserva
 
 
 def insertCidade(cidade):
@@ -287,3 +288,99 @@ def getHorarios():
         cursor.close()
         conn.close()
         return horarios
+
+
+def insertReserva(reserva):
+
+    query = 'INSERT INTO reserva(codReserva, passageiro, prazo) VALUES(%s, %s, %s)'
+    args = (reserva.getCodigoReserva(), reserva.getPassageiro(), reserva.getPrazo())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+    except Error as e:
+        raise Exception(e)
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def updateReserva(reserva):
+
+    query = 'UPDATE reserva SET passageiro = %s, prazo = %s WHERE codReserva = %s'
+    args = (reserva.getPassageiro(), reserva.getPrazo(), reserva.getCodigoReserva())
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+    except Error as e:
+        raise Exception(e)
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def deleteReserva(reserva):
+
+    query = 'DELETE FROM reserva WHERE codReserva = %s'
+    args = (reserva.getCodigoReserva(), )
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+
+        conn.commit()
+
+    except Error as e:
+        raise Exception(e)
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def getReservas():
+
+    query = 'SELECT * FROM reserva'
+
+    try:
+        db_config = read_db_config()
+        conn = MySQLConnection(**db_config)
+
+        cursor = conn.cursor()
+        cursor.execute(query)
+
+        reservas = []
+        rows = cursor.fetchall()
+        for row in rows:
+            reserva = Reserva()
+            reserva.setCodigoReserva(row[0])
+            reserva.setPassageiro(row[1])
+            reserva.setPrazo(row[2])
+            reservas.append(reserva)
+
+    except Error as e:
+        raise Exception(e)
+
+    finally:
+        cursor.close()
+        conn.close()
+        return reservas
+    
