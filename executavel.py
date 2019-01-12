@@ -2,18 +2,19 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-#from tkinter import tktable
+
+
 from controller.dbController import *
 from models.Reserva import Reserva
 
 class TabelaReserva(Toplevel):
     def __init__(self, master=None):
         Toplevel.__init__(self, master=master)
-
         # Configuração da janela principal
         self.title('Tabela Reserva')
         self.configure(background='gray94')
         self.geometry('480x540')
+
 
         #entradas
         self.textocodReserva = tk.Label(self, text="Codígo da Reserva(Inteiro) *")
@@ -58,11 +59,18 @@ class TabelaReserva(Toplevel):
 
 
         #visualizar a tabela de retorno
-        # table = tktable.Table(parent,
-        #                       rows=5,
-        #                       cols=5
-        #                       )
-        # table.pack()
+
+        self.listbox = Listbox(self)
+        self.listbox.grid(column=2,columnspan=12, row=7, padx=(40, 10))
+        self.listbox.configure(bg='white', width=40, borderwidth= 30)
+        self.criarTabela()
+
+    def criarTabela(self):
+        self.listbox.insert(END, "    ID, nome, idade")
+
+        for item in ["one", "two", "three", "four", "","","a","b","c","d","e"]:
+            self.listbox.insert(END, '    '+ item)
+
 
 
 
@@ -117,11 +125,7 @@ class TabelaReserva(Toplevel):
         #enviar o comando pro banco e listar na lista de baixo
 
 
-    #no buscar usar
-    #self.entryF.insert(0,str(fFar))
-
-
-class Tabela_Reserva_Trecho(Toplevel):
+class Tabela_Reserva_Tsch(Toplevel):
     def __init__(self, master=None):
         Toplevel.__init__(self, master=master)
 
@@ -158,23 +162,91 @@ class Tabela_Reserva_Trecho(Toplevel):
         # Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir")  # criamos o objeto botão
+        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=4, padx=(100, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
+        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=4)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
+        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
         self.botaoExcluir.grid(column=2, row=5, padx=(100, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
+        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=5)
 
-        # visualizar a tabela de retorno
+        # log
+        self.var2 = StringVar()
+        self.var2.set('aaaaaa')
+        self.log_trecho_reserva = tk.Label(self, textvariable=self.var2)
+        self.log_trecho_reserva.grid(column=2, row=6, pady=10)
 
-        # funcoes dos clicks
-        def inserirBanco(self):
-            pass
+
+        # visualizar a tabela de retorno
+        self.listbox = Listbox(self)
+        self.listbox.grid(column=2, columnspan=12, row=9, padx=(40, 10))
+        self.listbox.configure(bg='white', width=40, borderwidth=30)
+        self.criarTabela()
+
+    def criarTabela(self):
+        self.listbox.insert(END, "    Data, nome, idade")
+
+        for item in ["one", "two", "three", "four"]:
+            self.listbox.insert(END, '    ' + item)
+
+#funcoes dos clicks
+    def inserirBanco(self):
+        coddata = (self.entradacodData.get())  # pk
+        codReserva = (self.entradacodreserva2.get()) #fk
+        idAssento = (self.entAssento2.get()) #fk
+        idTrecho = (self.entTrecho2.get()) #fk
+        #enviar pro banco e voltar com erro ou sucesso
+        #se for sucesso
+        if coddata == '':
+            self.var2.set('>>>Favor insira o Código da reserva')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+        #     insertReserva(reserva)
+        #     #mensagem log
+        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        # #else
+        # #self.var.set('>>>Log do Erro')
+
+    def clickAlterar(self):
+        coddata = (self.entradacodData.get())  # pk
+        codReserva = (self.entradacodreserva2.get())  # fk
+        idAssento = (self.entAssento2.get())  # fk
+        idTrecho = (self.entTrecho2.get())  # fk
+        if coddata == '':
+            self.var2.set('>>>Favor insira o Código da reserva')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     updateReserva(reserva)
+        #     self.var.set('>>>Alteração Realizada')
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+
+    def clickDeletar(self):
+        coddata = (self.entradacodData.get())  # pk
+        codReserva = (self.entradacodreserva2.get())  # fk
+        idAssento = (self.entAssento2.get())  # fk
+        idTrecho = (self.entTrecho2.get())  # fk
+        #pode deletar sem ter o id, ai deletaria tudo que tem aquele nome por ex
+        if codReserva == '':
+            self.var2.set('>>>Favor insira o Código da reserva')
+        else:
+            reserva = Reserva(codReserva)
+            deleteReserva(reserva)
+
+    def clickBuscar(self):
+        coddata = (self.entradacodData.get())  # pk
+        codReserva = (self.entradacodreserva2.get())  # fk
+        idAssento = (self.entAssento2.get())  # fk
+        idTrecho = (self.entTrecho2.get())  # fk
+        #enviar o comando pro banco e listar na lista de baixo
 
 
 class Tabela_Assento(Toplevel):
@@ -617,8 +689,8 @@ class MainWindow(Frame):
         btn_name = event.widget.cget('text')
         if btn_name.endswith('Reserva'):
             window = TabelaReserva()
-        if btn_name.endswith('Reserva Trecho'):
-            window = Tabela_Reserva_Trecho()
+        if btn_name.endswith('Reserva Trecho.'):
+            window = Tabela_Reserva_Tsch()
         if btn_name.endswith('Assento'):
             window = Tabela_Assento()
         if btn_name.endswith('Horario'):
