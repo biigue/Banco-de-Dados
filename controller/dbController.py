@@ -27,6 +27,7 @@ def insertCidade(cidade):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -48,6 +49,7 @@ def updateCidade(cidade):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -69,6 +71,7 @@ def deleteCidade(cidade):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -141,6 +144,7 @@ def insertAssento(assento):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -162,6 +166,7 @@ def updateAssento(assento):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -182,6 +187,7 @@ def deleteAssento(assento):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -254,6 +260,7 @@ def insertHorario(horario):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -275,6 +282,7 @@ def updateHorario(horario):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -296,6 +304,7 @@ def deleteHorario(horario):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -368,6 +377,7 @@ def insertReserva(reserva):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -389,6 +399,7 @@ def updateReserva(reserva):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -410,6 +421,7 @@ def deleteReserva(reserva):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -482,6 +494,7 @@ def insertAeroporto(aeroporto):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -503,6 +516,7 @@ def updateAeroporto(aeroporto):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -524,6 +538,7 @@ def deleteAeroporto(aeroporto):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -596,6 +611,7 @@ def insertVoo(voo):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -617,6 +633,7 @@ def deleteVoo(voo):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -689,6 +706,7 @@ def insertTipoAeronave(tipoAeronave):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -710,6 +728,7 @@ def updateTipoAeronave(tipoAeronave):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -731,6 +750,7 @@ def deleteTipoAeronave(tipoAeronave):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -803,6 +823,7 @@ def insertTipoAeronaveAssento(tipoAeronaveAssento):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -824,6 +845,7 @@ def deleteTipoAeronaveAssento(tipoAeronaveAssento):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -897,6 +919,7 @@ def insertTrecho(trecho):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -918,6 +941,7 @@ def updateTrecho(trecho):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -939,6 +963,7 @@ def deleteTrecho(trecho):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -1011,6 +1036,7 @@ def insertReservaTrecho(reservaTrecho):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -1032,6 +1058,7 @@ def updateReservaTrecho(reservaTrecho):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)
@@ -1053,6 +1080,7 @@ def deleteReservaTrecho(reservaTrecho):
 
         cursor.close()
         conn.close()
+        return True
 
     except Error as e:
         raise Exception(e)

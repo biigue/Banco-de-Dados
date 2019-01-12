@@ -66,12 +66,19 @@ class TabelaReserva(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    ID, nome, idade")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "","","a","b","c","d","e"]:
-            self.listbox.insert(END, '    '+ item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    código, nome, prazo")
+        reservas = getReservas()
 
-
+        for item in reservas:
+            text = '    '
+            text += str(item.getCodigoReserva()) + ', '
+            text += str(item.getPassageiro()) + ', '
+            text += str(item.getPrazo())
+            self.listbox.insert(tk.END, text)
 
 
         #funcoes dos clicks
@@ -89,9 +96,13 @@ class TabelaReserva(Toplevel):
             self.entradacodReserva.delete(0, tk.END)
             self.entradapass.delete(0, tk.END) # apaga o campo destino
             self.entradaprazo.delete(0, tk.END)
-            insertReserva(reserva)
-            #mensagem log
-            self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+            if getReserva(codReserva) is None:
+                insertReserva(reserva)
+                #mensagem log
+                self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+                self.updateTabela()
+            else:
+                self.var.set('>>>Código da Reserva já existe')
         #else
         #self.var.set('>>>Log do Erro')
 
@@ -104,11 +115,16 @@ class TabelaReserva(Toplevel):
             self.var.set('>>>Favor insira o Código da reserva')
         else:
             reserva = Reserva(codReserva, passageiro, prazo)
-            updateReserva(reserva)
-            self.var.set('>>>Alteração Realizada')
             self.entradacodReserva.delete(0, tk.END)
             self.entradapass.delete(0, tk.END)  # apaga o campo destino
             self.entradaprazo.delete(0, tk.END)
+            if getReserva(codReserva) is not None:
+                updateReserva(reserva)
+                self.var.set('>>>Alteração Realizada')
+                self.updateTabela()
+            else:
+                self.var.set('>>>Não existe reserva com este código')
+
 
     def clickDeletar(self):
         self.var.set('')
@@ -118,14 +134,35 @@ class TabelaReserva(Toplevel):
         if codReserva == '':
             self.var.set('>>>Favor insira o Código da reserva')
         else:
-            reserva = Reserva(codReserva)
-            deleteReserva(reserva)
+            self.entradacodReserva.delete(0, tk.END)
+            self.entradapass.delete(0, tk.END)  # apaga o campo destino
+            self.entradaprazo.delete(0, tk.END)
+            if getReserva(codReserva) is not None:
+                reserva = Reserva(codReserva)
+                if deleteReserva(reserva):
+                    self.var.set('>>>Reserva excluida com sucesso')
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Não existe reserva com este código')
 
     def clickBuscar(self):
         self.var.set('')
         codReserva = (self.entradacodReserva.get())  # pega as entradas
-        passageiro = (self.entradapass.get())
-        prazo = (self.entradaprazo.get())
+        if codReserva == '':
+            self.var.set('>>>Favor insira o Código da reserva')
+        else:
+            reserva = getReserva(codReserva)
+            if reserva is None:
+                self.var.set('>>>Não existe reserva com este código')
+            else:
+                self.entradacodReserva.delete(0, tk.END)
+                self.entradapass.delete(0, tk.END)  # apaga o campo destino
+                self.entradaprazo.delete(0, tk.END)
+                self.entradacodReserva.insert(0, reserva.getCodigoReserva())
+                self.entradapass.insert(0, reserva.getPassageiro())
+                self.entradaprazo.insert(0, reserva.getPrazo())
         #enviar o comando pro banco e listar na lista de baixo
 
 
@@ -145,7 +182,7 @@ class Tabela_Reserva_Tsch(Toplevel):
         self.entradacodData.grid(column=3, row=0,
                                     sticky='EW')
 
-        self.txcodreserva2 = tk.Label(self, text="Cod Reserva") #fazer o select~?
+        self.txcodreserva2 = tk.Label(self, text="Cod Reserva *") #fazer o select~?
         self.txcodreserva2.grid(column=2, row=1, padx=(100, 10), pady=5)
         self.entradacodreserva2 = tk.Entry(self)
         self.entradacodreserva2.grid(column=3, row=1,
@@ -193,9 +230,15 @@ class Tabela_Reserva_Tsch(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Data, nome, idade")
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    Data, Código da Reserva, Número do Assento, ID Trecho")
 
-        for item in ["one", "two", "three", "four"]:
+        for item in getReservaTrechos():
+            text = '    '
+            text += str(item.getData())+', '
+            text += str(item.getCodigoReserva())+', '
+            text += str(item.getNumeroAssento())+', '
+            text += str(item.getIdTrecho())
             self.listbox.insert(END, '    ' + item)
 
 #funcoes dos clicks
@@ -207,16 +250,22 @@ class Tabela_Reserva_Tsch(Toplevel):
         idTrecho = (self.entTrecho2.get()) #fk
         #enviar pro banco e voltar com erro ou sucesso
         #se for sucesso
-        if coddata == '':
-            self.var2.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        if coddata == '' or codReserva == '':
+            self.var2.set('>>>Favor insira o Código da reserva e a Data')
+        else:
+            reserva = ReservaTrecho(coddata, codReserva, idAssento, idTrecho)
+            if getReservaTrecho(coddata) is None:
+                self.entradacodData.delete(0, tk.END)
+                self.entradacodreserva2.delete(0, tk.END) # apaga o campo destino
+                self.entAssento2.delete(0, tk.END)
+                self.entTrecho2.delete(0, tk.END)
+                if insertReservaTrecho(reserva):
+                    self.var2.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+                    self.criarTabela()
+                else:
+                    self.var2.set('>>>Erro')
+            else:
+                self.var2.set('>>>Já existe registro com esta data')
         # #else
         # #self.var.set('>>>Log do Erro')
 
@@ -227,14 +276,22 @@ class Tabela_Reserva_Tsch(Toplevel):
         idAssento = (self.entAssento2.get())  # fk
         idTrecho = (self.entTrecho2.get())  # fk
         if coddata == '':
-            self.var2.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+            self.var2.set('>>>Favor insira a data')
+        else:
+            reserva = ReservaTrecho(coddata, codReserva, idAssento, idTrecho)
+            if getReservaTrecho(coddata) is not None:
+                self.entradacodData.delete(0, tk.END)
+                self.entradacodreserva2.delete(0, tk.END)  # apaga o campo destino
+                self.entAssento2.delete(0, tk.END)
+                self.entTrecho2.delete(0, tk.END)
+                if updateReservaTrecho(reserva):
+                    # mensagem log
+                    self.var2.set('>>>Cadastro alterado com sucesso')  # alterar para só funcionar se inserir mesmo
+                    self.criarTabela()
+                else:
+                    self.var2.set('>>>Erro')
+            else:
+                self.var2.set('>>>Não existe registro com esta data')
 
     def clickDeletar(self):
         self.var2.set('')
@@ -246,8 +303,20 @@ class Tabela_Reserva_Tsch(Toplevel):
         if codReserva == '':
             self.var2.set('>>>Favor insira o Código da reserva')
         else:
-            reserva = Reserva(codReserva)
-            deleteReserva(reserva)
+            reserva = ReservaTrecho(coddata, codReserva, idAssento, idTrecho)
+            if getReservaTrecho(coddata) is not None:
+                self.entradacodData.delete(0, tk.END)
+                self.entradacodreserva2.delete(0, tk.END)  # apaga o campo destino
+                self.entAssento2.delete(0, tk.END)
+                self.entTrecho2.delete(0, tk.END)
+                if deleteReservaTrecho(reserva):
+                    # mensagem log
+                    self.var2.set('>>>Cadastro excluido com sucesso')  # alterar para só funcionar se inserir mesmo
+                    self.criarTabela()
+                else:
+                    self.var2.set('>>>Erro')
+            else:
+                self.var2.set('>>>Não existe registro com esta data')
 
     def clickBuscar(self):
         self.var2.set('')
@@ -255,6 +324,21 @@ class Tabela_Reserva_Tsch(Toplevel):
         codReserva = (self.entradacodreserva2.get())  # fk
         idAssento = (self.entAssento2.get())  # fk
         idTrecho = (self.entTrecho2.get())  # fk
+        if coddata == '':
+            self.var2.set('>>> Favor insira a data')
+        else:
+            reserva = getReservaTrecho(coddata)
+            if reserva is None:
+                self.var2.set('>>>Não existe registro com esta data')
+            else:
+                self.entradacodData.delete(0, tk.END)
+                self.entradacodreserva2.delete(0, tk.END)  # apaga o campo destino
+                self.entAssento2.delete(0, tk.END)
+                self.entTrecho2.delete(0, tk.END)
+                self.entradacodData.insert(0, reserva.getData())
+                self.entradacodreserva2(0, reserva.getCodigoReserva())
+                self.entTrecho2.insert(0, reserva.getIdTrecho())
+                self.entAssento2.insert(0, reserva.getNumeroAssento())
         #enviar o comando pro banco e listar na lista de baixo
 
 
