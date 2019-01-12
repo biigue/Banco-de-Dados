@@ -87,8 +87,6 @@ class TabelaReserva(Toplevel):
         codReserva = (self.entradacodReserva.get())  # pega as entradas
         passageiro = (self.entradapass.get())
         prazo = (self.entradaprazo.get())
-        #enviar pro banco e voltar com erro ou sucesso
-        #se for sucesso
         if codReserva == '':
             self.var.set('>>>Favor insira o Código da reserva')
         else:
@@ -97,10 +95,11 @@ class TabelaReserva(Toplevel):
             self.entradapass.delete(0, tk.END) # apaga o campo destino
             self.entradaprazo.delete(0, tk.END)
             if getReserva(codReserva) is None:
-                insertReserva(reserva)
-                #mensagem log
-                self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-                self.updateTabela()
+                if insertReserva(reserva):
+                    self.var.set('>>>Cadastro Concluido')
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
             else:
                 self.var.set('>>>Código da Reserva já existe')
         #else
@@ -116,12 +115,14 @@ class TabelaReserva(Toplevel):
         else:
             reserva = Reserva(codReserva, passageiro, prazo)
             self.entradacodReserva.delete(0, tk.END)
-            self.entradapass.delete(0, tk.END)  # apaga o campo destino
+            self.entradapass.delete(0, tk.END)
             self.entradaprazo.delete(0, tk.END)
             if getReserva(codReserva) is not None:
-                updateReserva(reserva)
-                self.var.set('>>>Alteração Realizada')
-                self.updateTabela()
+                if updateReserva(reserva):
+                    self.var.set('>>>Alteração Realizada')
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
             else:
                 self.var.set('>>>Não existe reserva com este código')
 
@@ -141,6 +142,9 @@ class TabelaReserva(Toplevel):
                 reserva = Reserva(codReserva)
                 if deleteReserva(reserva):
                     self.var.set('>>>Reserva excluida com sucesso')
+                    self.entradacodReserva.delete(0, tk.END)
+                    self.entradapass.delete(0, tk.END)
+                    self.entradaprazo.delete(0, tk.END)
                     self.updateTabela()
                 else:
                     self.var.set('>>>Erro')
@@ -163,6 +167,7 @@ class TabelaReserva(Toplevel):
                 self.entradacodReserva.insert(0, reserva.getCodigoReserva())
                 self.entradapass.insert(0, reserva.getPassageiro())
                 self.entradaprazo.insert(0, reserva.getPrazo())
+                self.var.set('>>>Busca concluida com sucesso')
         #enviar o comando pro banco e listar na lista de baixo
 
 
@@ -339,7 +344,6 @@ class Tabela_Reserva_Tsch(Toplevel):
                 self.entradacodreserva2(0, reserva.getCodigoReserva())
                 self.entTrecho2.insert(0, reserva.getIdTrecho())
                 self.entAssento2.insert(0, reserva.getNumeroAssento())
-        #enviar o comando pro banco e listar na lista de baixo
 
 
 class Tabela_Assento(Toplevel):
@@ -718,36 +722,27 @@ class Tabela_Voo(Toplevel):
     #funcoes dos clicks
     def inserirBanco(self):
         self.var.set('')
-        nmVoo = (self.entnumVoo.get())  # pega as entradas
-
-        #enviar pro banco e voltar com erro ou sucesso
-        #se for sucesso
+        nmVoo = (self.entnumVoo.get())
         if nmVoo == '':
             self.var.set('>>>Favor insira o Número do Vôo')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+        else:
+            if getVoo(nmVoo) is None:
+                voo = Voo(nmVoo)
+                if insertVoo(voo):
+                    self.var.set('>>>Voo cadastrado com sucesso')
+                    self.entnumVoo.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Voo já cadastrado')
+
 
     def clickAlterar(self):
-        self.var.set('')
+        self.var.set('>>>Não é possivel alterar o voo, pois ele só possui um campo')
         nmVoo = (self.entnumVoo.get())  # pega as entradas
 
-        if nmVoo == '':
-            self.var.set('>>>Favor insira o Número do Vôo')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+
 
     def clickDeletar(self):
         self.var.set('')
@@ -755,15 +750,28 @@ class Tabela_Voo(Toplevel):
 
         if nmVoo == '':
             self.var.set('>>>Favor insira o Número do Vôo')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+        else:
+            if getVoo(nmVoo) is not None:
+                voo = Voo(nmVoo)
+                if deleteVoo(voo):
+                    self.var.set('>>>Voo deletado com sucesso')
+                    self.entnumVoo.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Voo não cadastrado')
 
     def clickBuscar(self):
         self.var.set('')
         nmVoo = (self.entnumVoo.get())  # pega as entradas
         if nmVoo == '':
             self.var.set('>>>Favor insira o Número do Vôo')
+        else:
+            if getVoo(nmVoo) is not None:
+                self.var.set('>>>Voo encontrado com sucesso')
+            else:
+                self.var.set('>>>Voo não encontrado')
 
 
 class Tabela_Trecho(Toplevel):
@@ -855,69 +863,105 @@ class Tabela_Trecho(Toplevel):
     def inserirBanco(self):
         self.var.set('')
         trecho = (self.entidTrecho_trecho.get())
-        horaro_partida = (self.enhorarioPartida.get())
+        numerovoo = (self.enhorarioPartida.get())
         cod_aeronave = (self.ent_codaeronave_trecho.get())
         origem = (self.ent_idorigem_trecho.get()) #fk
         destino =(self.ent_idDestino_trecho.get()) #fk
         #enviar pro banco e voltar com erro ou sucesso
         #se for sucesso
         if trecho == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+            self.var.set('>>>Favor insira o trecho')
+        else:
+            if getTrecho(trecho) is None:
+                tre = Trecho(trecho, numerovoo, cod_aeronave, origem, destino)
+                if insertTrecho(tre):
+                    self.var.set('>>>Trecho cadastrado com sucesso')
+                    self.entidTrecho_trecho.delete(0, END)
+                    self.enhorarioPartida.delete(0, END)
+                    self.ent_codaeronave_trecho.delete(0, END)
+                    self.ent_idorigem_trecho.delete(0, END)
+                    self.ent_idDestino_trecho.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Trecho já cadastrado')
 
     def clickAlterar(self):
         self.var.set('')
         trecho = (self.entidTrecho_trecho.get())
-        horaro_partida = (self.enhorarioPartida.get())
+        numerovoo = (self.enhorarioPartida.get())
         cod_aeronave = (self.ent_codaeronave_trecho.get())
         origem = (self.ent_idorigem_trecho.get())  # fk
         destino = (self.ent_idDestino_trecho.get())  # fk
-        # enviar pro banco e voltar com erro ou sucesso
-        # se for sucesso
         if trecho == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+            self.var.set('>>>Favor insira o trecho')
+        else:
+            if getTrecho(trecho) is not None:
+                tre = Trecho(trecho, numerovoo, cod_aeronave, origem, destino)
+                if updateTrecho(tre):
+                    self.var.set('>>>Trecho atualizado com sucesso')
+                    self.entidTrecho_trecho.delete(0, END)
+                    self.enhorarioPartida.delete(0, END)
+                    self.ent_codaeronave_trecho.delete(0, END)
+                    self.ent_idorigem_trecho.delete(0, END)
+                    self.ent_idDestino_trecho.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Trecho não cadastrado')
 
     def clickDeletar(self):
         self.var.set('')
         trecho = (self.entidTrecho_trecho.get())
-        horaro_partida = (self.enhorarioPartida.get())
+        numerovoo = (self.enhorarioPartida.get())
         cod_aeronave = (self.ent_codaeronave_trecho.get())
         origem = (self.ent_idorigem_trecho.get())  # fk
         destino = (self.ent_idDestino_trecho.get())  # fk
-        # enviar pro banco e voltar com erro ou sucesso
-        # se for sucesso
         if trecho == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+            self.var.set('>>>Favor insira o trecho')
+        else:
+            if getTrecho(trecho) is not None:
+                tre = Trecho(trecho, numerovoo, cod_aeronave, origem, destino)
+                if deleteTrecho(tre):
+                    self.var.set('>>>Trecho deletado com sucesso')
+                    self.entidTrecho_trecho.delete(0, END)
+                    self.enhorarioPartida.delete(0, END)
+                    self.ent_codaeronave_trecho.delete(0, END)
+                    self.ent_idorigem_trecho.delete(0, END)
+                    self.ent_idDestino_trecho.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Trecho não cadastrado')
 
     def clickBuscar(self):
         self.var.set('')
         trecho = (self.entidTrecho_trecho.get())
-        horaro_partida = (self.enhorarioPartida.get())
+        numerovoo = (self.enhorarioPartida.get())
         cod_aeronave = (self.ent_codaeronave_trecho.get())
         origem = (self.ent_idorigem_trecho.get())  # fk
         destino = (self.ent_idDestino_trecho.get())  # fk
-        # enviar pro banco e voltar com erro ou sucesso
-        # se for sucesso
-        #enviar o comando pro banco e listar na lista de baixo
+        if trecho == '':
+            self.var.set('>>>Favor insira o trecho')
+        else:
+            tre = getTrecho(trecho)
+            if tre is not None:
+                self.entidTrecho_trecho.delete(0, END)
+                self.enhorarioPartida.delete(0, END)
+                self.ent_codaeronave_trecho.delete(0, END)
+                self.ent_idorigem_trecho.delete(0, END)
+                self.ent_idDestino_trecho.delete(0, END)
+                self.entidTrecho_trecho.insert(0, tre.getIdTrecho())
+                self.enhorarioPartida.insert(0, tre.getNumeroVoo())
+                self.ent_codaeronave_trecho.insert(0, tre.getCodigoAeronave())
+                self.ent_idorigem_trecho.insert(0, tre.getAeroportoOrigem())
+                self.ent_idDestino_trecho.insert(0, tre.getAeroportoDestino())
+                self.var.set('>>>Busca concluida com sucesso')
+            else:
+                self.var.set('>>>Não foi encontrado nenhum trecho cadastrado com este codigo')
 
 
 
@@ -1001,16 +1045,19 @@ class Tabela_Aeroporto(Toplevel):
 
         if codAero == '':
             self.var.set('>>>Favor insira o Código do Aeroporto')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+        else:
+            if getAeroporto(codAero) is None:
+                aer = Aeroporto(codAero, nomeAeroporto, codCidade)
+                if insertAeroporto(aer):
+                    self.var.set('>>>Aeroporto cadastrado com sucesso')
+                    self.ent_codaero_aeroporto.delete(0, END)
+                    self.ent_codCidade_aeroporto.delete(0, END)
+                    self.ent_nomeaero_aeroporto.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeroporto já cadastrado')
 
     def clickAlterar(self):
         self.var.set('')
@@ -1020,13 +1067,19 @@ class Tabela_Aeroporto(Toplevel):
 
         if codAero == '':
             self.var.set('>>>Favor insira o Código do Aeroporto')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+        else:
+            if getAeroporto(codAero) is not None:
+                aer = Aeroporto(codAero, nomeAeroporto, codCidade)
+                if updateAeroporto(aer):
+                    self.var.set('>>>Aeroporto atualizado com sucesso')
+                    self.ent_codaero_aeroporto.delete(0, END)
+                    self.ent_codCidade_aeroporto.delete(0, END)
+                    self.ent_nomeaero_aeroporto.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeroporto não cadastrado')
 
     def clickDeletar(self):
         self.var.set('')
@@ -1036,9 +1089,19 @@ class Tabela_Aeroporto(Toplevel):
 
         if codAero == '':
             self.var.set('>>>Favor insira o Código do Aeroporto')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+        else:
+            if getAeroporto(codAero) is not None:
+                aer = Aeroporto(codAero, nomeAeroporto, codCidade)
+                if deleteAeroporto(aer):
+                    self.var.set('>>>Aeroporto deletado com sucesso')
+                    self.ent_codaero_aeroporto.delete(0, END)
+                    self.ent_codCidade_aeroporto.delete(0, END)
+                    self.ent_nomeaero_aeroporto.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeroporto não cadastrado')
 
     def clickBuscar(self):
         self.var.set('')
@@ -1047,6 +1110,18 @@ class Tabela_Aeroporto(Toplevel):
         codCidade = (self.ent_codCidade_aeroporto.get())
         if codAero == '':
             self.var.set('>>>Favor insira o Código do Aeroporto')
+        else:
+            aer = getAeroporto(codAero)
+            if aer is not None:
+                self.var.set('>>>Aeroporto encontrado com sucesso')
+                self.ent_codaero_aeroporto.delete(0, END)
+                self.ent_codCidade_aeroporto.delete(0, END)
+                self.ent_nomeaero_aeroporto.delete(0, END)
+                self.ent_codaero_aeroporto.insert(0, aer.get)
+                self.ent_codCidade_aeroporto.insert(0, aer.getCodigoCidade())
+                self.ent_nomeaero_aeroporto.insert(0, aer.getNome())
+            else:
+                self.var.set('>>>Aeroporto não cadastrado')
 
 
 class Tabela_Cidade(Toplevel):
@@ -1132,16 +1207,19 @@ class Tabela_Cidade(Toplevel):
         nomePais = (self.ent_nomepais_cidade.get())
         if codCidade == '':
             self.var.set('>>>Favor insira o Código da Cidade')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+        else:
+            if getCidade(codCidade) is None:
+                cid = Cidade(codCidade, nomeCidade, nomePais)
+                if insertCidade(cid):
+                    self.var.set('>>>Cidade cadastrada com sucesso')
+                    self.ent_codcidade_cidade.delete(0, END)
+                    self.ent_nomecidade_cidade.delete(0, END)
+                    self.ent_nomepais_cidade.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Cidade já cadastrada')
 
     def clickAlterar(self):
         self.var.set('')
@@ -1150,13 +1228,19 @@ class Tabela_Cidade(Toplevel):
         nomePais = (self.ent_nomepais_cidade.get())
         if codCidade == '':
             self.var.set('>>>Favor insira o Código da Cidade')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+        else:
+            if getCidade(codCidade) is not None:
+                cid = Cidade(codCidade, nomeCidade, nomePais)
+                if updateCidade(cid):
+                    self.var.set('>>>Cidade atualizada com sucesso')
+                    self.ent_codcidade_cidade.delete(0, END)
+                    self.ent_nomecidade_cidade.delete(0, END)
+                    self.ent_nomepais_cidade.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Cidade não cadastrada')
 
     def clickDeletar(self):
         self.var.set('')
@@ -1165,9 +1249,19 @@ class Tabela_Cidade(Toplevel):
         nomePais = (self.ent_nomepais_cidade.get())
         if codCidade == '':
             self.var.set('>>>Favor insira o Código da Cidade')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+        else:
+            if getCidade(codCidade) is not None:
+                cid = Cidade(codCidade, nomeCidade, nomePais)
+                if deleteCidade(cid):
+                    self.var.set('>>>Cidade deletada com sucesso')
+                    self.ent_codcidade_cidade.delete(0, END)
+                    self.ent_nomecidade_cidade.delete(0, END)
+                    self.ent_nomepais_cidade.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Cidade não cadastrada')
 
     def clickBuscar(self):
         self.var.set('')
@@ -1176,6 +1270,18 @@ class Tabela_Cidade(Toplevel):
         nomePais = (self.ent_nomepais_cidade.get())
         if codCidade == '':
             self.var.set('>>>Favor insira o Código da Cidade')
+        else:
+            cid = getCidade(codCidade)
+            if cid is not None:
+                self.var.set('>>>Cidade encontrada com sucesso')
+                self.ent_codcidade_cidade.delete(0, END)
+                self.ent_nomecidade_cidade.delete(0, END)
+                self.ent_nomepais_cidade.delete(0, END)
+                self.ent_codcidade_cidade.insert(0, cid.getCodigo())
+                self.ent_nomecidade_cidade.insert(0, cid.getNome())
+                self.ent_nomepais_cidade.insert(0, cid.getPais())
+            else:
+                self.var.set('>>>Cidade não cadastrada')
 
 
 class Tabela_Aeronave(Toplevel):
@@ -1250,16 +1356,18 @@ class Tabela_Aeronave(Toplevel):
 
         if codAeronave == '':
             self.var.set('>>>Favor insira o Código da Aeronave')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+        else:
+            if getTipoAeronave(codAeronave) is None:
+                aer = TipoAeronave(codAeronave, descAeronave)
+                if insertTipoAeronave(aer):
+                    self.var.set('>>>Aeronave cadastrada com sucesso')
+                    self.ent_codaeronave_aernonave.delete(0, END)
+                    self.ent_descaeronave_aernonave.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeronave já cadastrada')
 
     def clickAlterar(self):
         self.var.set('')
@@ -1268,13 +1376,18 @@ class Tabela_Aeronave(Toplevel):
 
         if codAeronave == '':
             self.var.set('>>>Favor insira o Código da Aeronave')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+        else:
+            if getTipoAeronave(codAeronave) is not None:
+                aer = TipoAeronave(codAeronave, descAeronave)
+                if updateTipoAeronave(aer):
+                    self.var.set('>>>Aeronave atualizada com sucesso')
+                    self.ent_codaeronave_aernonave.delete(0, END)
+                    self.ent_descaeronave_aernonave.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeronave não cadastrada')
 
     def clickDeletar(self):
         self.var.set('')
@@ -1283,9 +1396,18 @@ class Tabela_Aeronave(Toplevel):
 
         if codAeronave == '':
             self.var.set('>>>Favor insira o Código da Aeronave')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+        else:
+            if getTipoAeronave(codAeronave) is not None:
+                aer = TipoAeronave(codAeronave, descAeronave)
+                if deleteTipoAeronave(aer):
+                    self.var.set('>>>Aeronave deletada com sucesso')
+                    self.ent_codaeronave_aernonave.delete(0, END)
+                    self.ent_descaeronave_aernonave.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeronave não cadastrada')
 
     def clickBuscar(self):
         self.var.set('')
@@ -1294,6 +1416,17 @@ class Tabela_Aeronave(Toplevel):
 
         if codAeronave == '':
             self.var.set('>>>Favor insira o Código da Aeronave')
+        else:
+            aer = getTipoAeronave(codAeronave)
+            if aer is not None:
+                self.var.set('>>>Aeronave encontrada com sucesso')
+                self.ent_codaeronave_aernonave.delete(0, END)
+                self.ent_descaeronave_aernonave.delete(0, END)
+                self.ent_codaeronave_aernonave.insert(0, aer.getCodigo())
+                self.ent_descaeronave_aernonave.insert(0, aer.getDescricao())
+                self.updateTabela()
+            else:
+                self.var.set('>>>Aeronave não cadastrada')
 
 
 class Tabela_Aeronave_Lugar(Toplevel):
@@ -1365,55 +1498,63 @@ class Tabela_Aeronave_Lugar(Toplevel):
     #funcoes dos clicks
     def inserirBanco(self):
         self.var.set('')
-        diaSemana = (self.ent_codaeronave_aeroLugar.get())
-        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+        codaero = (self.ent_codaeronave_aeroLugar.get())
+        codasse = (self.ent_idAssento_aeroLugar.get())
 
-        if diaSemana == '':
-            self.var.set('>>>Favor insira o Cod da Aeronave')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+        if codaero == '' or codasse == '':
+            self.var.set('>>>Favor insira o Codigo da Aeronave e o numero do assento')
+        else:
+            if getTipoAeronaveAssento(codaero, codasse) is None:
+                aer = TipoAeronaveAssento(codaero, codasse)
+                if insertTipoAeronaveAssento(aer):
+                    self.var.set('>>>Aeronave-assento cadastrada com sucesso')
+                    self.ent_codaeronave_aeroLugar.delete(0, END)
+                    self.ent_idAssento_aeroLugar.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeronave-assento já cadastrada')
 
     def clickAlterar(self):
         self.var.set('')
-        diaSemana = (self.ent_codaeronave_aeroLugar.get())
-        horaro_partida = (self.ent_idAssento_aeroLugar.get())
-
-        if diaSemana == '':
-            self.var.set('>>>Favor insira o Cod da Aeronave')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+        self.var.set('>>>Não é possivel atualizar um Aeronave-assento')
+        codaero = (self.ent_codaeronave_aeroLugar.get())
+        codasse = (self.ent_idAssento_aeroLugar.get())
 
     def clickDeletar(self):
         self.var.set('')
-        diaSemana = (self.ent_codaeronave_aeroLugar.get())
-        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+        codaero = (self.ent_codaeronave_aeroLugar.get())
+        codasse = (self.ent_idAssento_aeroLugar.get())
 
-        if diaSemana == '':
-            self.var.set('>>>Favor insira o Cod da Aeronave')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+        if codaero == '' or codasse == '':
+            self.var.set('>>>Favor insira o Codigo da Aeronave e o numero do assento')
+        else:
+            if getTipoAeronaveAssento(codaero, codasse) is not None:
+                aer = TipoAeronaveAssento(codaero, codasse)
+                if deleteTipoAeronaveAssento(aer):
+                    self.var.set('>>>Aeronave-assento deletado com sucesso')
+                    self.ent_codaeronave_aeroLugar.delete(0, END)
+                    self.ent_idAssento_aeroLugar.delete(0, END)
+                    self.updateTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Aeronave-assento não cadastrada')
 
     def clickBuscar(self):
         self.var.set('')
-        diaSemana = (self.ent_codaeronave_aeroLugar.get())
-        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+        codaero = (self.ent_codaeronave_aeroLugar.get())
+        codasse = (self.ent_idAssento_aeroLugar.get())
 
-        if diaSemana == '':
-            self.var.set('>>>Favor insira o Cod da Aeronave')
+        if codaero == '' or codasse == '':
+            self.var.set('>>>Favor insira o Codigo da Aeronave e o numero do assento')
+        else:
+            aer = getTipoAeronaveAssento(codaero, codasse)
+            if aer is not None:
+                self.var.set('>>>Aeronave-assento encontrado com sucesso')
+            else:
+                self.var.set('>>>Aeronave-assento não cadastrada')
 
 
 class MainWindow(Frame):

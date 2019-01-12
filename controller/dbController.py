@@ -89,8 +89,9 @@ def getCidade(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             cidade = Cidade(row[0], row[1], row[2])
         else:
             cidade = None
@@ -205,8 +206,9 @@ def getAssento(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             assento = Assento(row[0], row[1])
         else:
             assento = None
@@ -322,8 +324,9 @@ def getHorario(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             horario = Horario(row[0], row[1], row[2], row[3])
         else:
             horario = None
@@ -439,8 +442,9 @@ def getReserva(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             reserva = Reserva(row[0], row[1], row[2])
         else:
             reserva = None
@@ -556,8 +560,9 @@ def getAeroporto(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             aeroporto = Aeroporto(row[0], row[1], row[2])
         else:
             aeroporto = None
@@ -651,8 +656,9 @@ def getVoo(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             voo = Voo(row[0])
         else:
             voo = None
@@ -768,8 +774,9 @@ def getTipoAeronave(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             tipoAeronave = TipoAeronave(row[0], row[1])
         else:
             tipoAeronave = None
@@ -851,7 +858,7 @@ def deleteTipoAeronaveAssento(tipoAeronaveAssento):
         raise Exception(e)
 
 
-def getTipoAeronave(codAeronave, idAssento):
+def getTipoAeronaveAssento(codAeronave, idAssento):
 
     query = 'SELECT * FROM tipoaeronave_assento WHERE codAeronave = %s, idAssento = %s'
     args = (codAeronave, idAssento)
@@ -863,8 +870,9 @@ def getTipoAeronave(codAeronave, idAssento):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             tipoAeronaveAssento = TipoAeronaveAssento(row[0], row[1])
         else:
             tipoAeronaveAssento = None
@@ -981,8 +989,9 @@ def getTrecho(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             trecho = Trecho(row[0], row[1], row[2], row[3], row[4])
         else:
             trecho = None
@@ -1097,8 +1106,9 @@ def getReservaTrecho(id):
         cursor = conn.cursor()
         cursor.execute(query, args)
 
-        if cursor.rowcount > 0:
-            row = cursor.fetchone()
+        row = cursor.fetchone()
+
+        if row is not None:
             reservaTrecho = ReservaTrecho(row[0], row[1], row[2], row[3])
         else:
             reservaTrecho = None
