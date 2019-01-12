@@ -162,28 +162,29 @@ class Tabela_Reserva_Tsch(Toplevel):
         # Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
-        self.botaoInserir.grid(column=2, row=4, padx=(100, 10), pady=5)
+        self.botaoInserir2 = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
+        self.botaoInserir2.grid(column=2, row=4, padx=(100, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
-        self.botaoAlterar.grid(column=3, row=4)
+        self.botaoAlterar2 = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
+        self.botaoAlterar2.grid(column=3, row=4)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
-        self.botaoExcluir.grid(column=2, row=5, padx=(100, 10), pady=5)
+        self.botaoExcluir2 = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
+        self.botaoExcluir2.grid(column=2, row=5, padx=(100, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
-        self.botaoBuscar.grid(column=3, row=5)
+        self.botaoBuscar2 = tk.Button(self, text=u"Buscar", command=self.clickBuscar)
+        self.botaoBuscar2.grid(column=3, row=5)
+
 
         # log
         self.var2 = StringVar()
-        self.var2.set('aaaaaa')
+        self.var2.set('')
         self.log_trecho_reserva = tk.Label(self, textvariable=self.var2)
         self.log_trecho_reserva.grid(column=2, row=6, pady=10)
 
 
         # visualizar a tabela de retorno
         self.listbox = Listbox(self)
-        self.listbox.grid(column=2, columnspan=12, row=9, padx=(40, 10))
+        self.listbox.grid(column=2, columnspan=12, row=7, padx=(40, 10))
         self.listbox.configure(bg='white', width=40, borderwidth=30)
         self.criarTabela()
 
@@ -671,7 +672,7 @@ class MainWindow(Frame):
         self.titulo.pack()
         self.titulo2.pack()
 
-        for name in ("Reserva", "Reserva Trecho", "Assento", "Horario", "Vôo"):
+        for name in ("Reserva", "Reserva Trecho.", "Assento", "Horario", "Vôo"):
             self.button = Button(self.container2, text=name)
             self.button.bind("<Button-1>", self.handle_event)
             self.button.pack(side='left', fill='x', expand=True)
