@@ -745,7 +745,7 @@ class Tabela_Trecho(Toplevel):
 
         self.listbox = Listbox(self)
         self.listbox.grid(column=2, columnspan=12, row=7, padx=(40, 10))
-        self.listbox.configure(bg='white', width=40, borderwidth=30)
+        self.listbox.configure(bg='white', width=60)
         self.criarTabela()
 
     def criarTabela(self):
@@ -855,23 +855,92 @@ class Tabela_Aeroporto(Toplevel):
         # Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir")  # criamos o objeto botão
+        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=4, padx=(160, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
+        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=4)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
+        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
         self.botaoExcluir.grid(column=2, row=5, padx=(160, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
+        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=5)
+
+        # log
+        self.var = StringVar()
+        self.var.set('')
+        self.log_reserva = tk.Label(self, textvariable=self.var)
+        self.log_reserva.grid(column=2, row=6, pady=10)
 
         # visualizar a tabela de retorno
 
-        # funcoes dos clicks
-        def inserirBanco(self, codreserva, passageiro, prazo):
-            pass
+        self.listbox = Listbox(self)
+        self.listbox.grid(column=2, columnspan=12, row=7, padx=(40, 10))
+        self.listbox.configure(bg='white', width=60)
+        self.criarTabela()
+
+    def criarTabela(self):
+        self.listbox.insert(END, "    Cod Aeroporto, Nome Aeroporto, Cidade Aeroporto")
+
+        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
+            self.listbox.insert(END, '    ' + item)
+
+    #funcoes dos clicks
+    def inserirBanco(self):
+        self.var.set('')
+        codAero = (self.ent_codaero_aeroporto.get())
+        nomeAeroporto = (self.ent_nomeaero_aeroporto.get())
+        codCidade = (self.ent_codCidade_aeroporto.get())
+
+        if codAero == '':
+            self.var.set('>>>Favor insira o Código do Aeroporto')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+        #     insertReserva(reserva)
+        #     #mensagem log
+        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        # #else
+        #self.var.set('>>>Log do Erro')
+
+    def clickAlterar(self):
+        self.var.set('')
+        codAero = (self.ent_codaero_aeroporto.get())
+        nomeAeroporto = (self.ent_nomeaero_aeroporto.get())
+        codCidade = (self.ent_codCidade_aeroporto.get())
+
+        if codAero == '':
+            self.var.set('>>>Favor insira o Código do Aeroporto')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     updateReserva(reserva)
+        #     self.var.set('>>>Alteração Realizada')
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+
+    def clickDeletar(self):
+        self.var.set('')
+        codAero = (self.ent_codaero_aeroporto.get())
+        nomeAeroporto = (self.ent_nomeaero_aeroporto.get())
+        codCidade = (self.ent_codCidade_aeroporto.get())
+
+        if codAero == '':
+            self.var.set('>>>Favor insira o Código do Aeroporto')
+        # else:
+        #     reserva = Reserva(codReserva)
+        #     deleteReserva(reserva)
+
+    def clickBuscar(self):
+        self.var.set('')
+        codAero = (self.ent_codaero_aeroporto.get())
+        nomeAeroporto = (self.ent_nomeaero_aeroporto.get())
+        codCidade = (self.ent_codCidade_aeroporto.get())
+        if codAero == '':
+            self.var.set('>>>Favor insira o Código do Aeroporto')
 
 
 class Tabela_Cidade(Toplevel):
@@ -905,23 +974,93 @@ class Tabela_Cidade(Toplevel):
         # Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir")  # criamos o objeto botão
+        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=4, padx=(160, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
+        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=4)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
+        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
         self.botaoExcluir.grid(column=2, row=5, padx=(160, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
+        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=5)
 
+        # log
+        self.var = StringVar()
+        self.var.set('')
+        self.log_reserva = tk.Label(self, textvariable=self.var)
+        self.log_reserva.grid(column=2, row=6, pady=10)
+
         # visualizar a tabela de retorno
+
+        self.listbox = Listbox(self)
+        self.listbox.grid(column=2, columnspan=12, row=7, padx=(40, 10))
+        self.listbox.configure(bg='white', width=60, borderwidth=30)
+        self.criarTabela()
+
+    def criarTabela(self):
+        self.listbox.insert(END, "     ID, Cidade, Pais")
+
+        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
+            self.listbox.insert(END, '    ' + item)
 
         # funcoes dos clicks
         def inserirBanco(self, codreserva, passageiro, prazo):
             pass
+
+    #funcoes dos clicks
+    def inserirBanco(self):
+        self.var.set('')
+        codCidade = (self.ent_codcidade_cidade.get())
+        nomeCidade = (self.ent_nomecidade_cidade.get())
+        nomePais = (self.ent_nomepais_cidade.get())
+        if codCidade == '':
+            self.var.set('>>>Favor insira o Código da Cidade')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+        #     insertReserva(reserva)
+        #     #mensagem log
+        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        # #else
+        #self.var.set('>>>Log do Erro')
+
+    def clickAlterar(self):
+        self.var.set('')
+        codCidade = (self.ent_codcidade_cidade.get())
+        nomeCidade = (self.ent_nomecidade_cidade.get())
+        nomePais = (self.ent_nomepais_cidade.get())
+        if codCidade == '':
+            self.var.set('>>>Favor insira o Código da Cidade')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     updateReserva(reserva)
+        #     self.var.set('>>>Alteração Realizada')
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+
+    def clickDeletar(self):
+        self.var.set('')
+        codCidade = (self.ent_codcidade_cidade.get())
+        nomeCidade = (self.ent_nomecidade_cidade.get())
+        nomePais = (self.ent_nomepais_cidade.get())
+        if codCidade == '':
+            self.var.set('>>>Favor insira o Código da Cidade')
+        # else:
+        #     reserva = Reserva(codReserva)
+        #     deleteReserva(reserva)
+
+    def clickBuscar(self):
+        self.var.set('')
+        codCidade = (self.ent_codcidade_cidade.get())
+        nomeCidade = (self.ent_nomecidade_cidade.get())
+        nomePais = (self.ent_nomepais_cidade.get())
+        if codCidade == '':
+            self.var.set('>>>Favor insira o Código da Cidade')
 
 
 class Tabela_Aeronave(Toplevel):
@@ -949,23 +1088,88 @@ class Tabela_Aeronave(Toplevel):
         # Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir")  # criamos o objeto botão
+        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=4, padx=(160, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
+        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=4)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
+        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
         self.botaoExcluir.grid(column=2, row=5, padx=(160, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
+        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=5)
+
+        # log
+        self.var = StringVar()
+        self.var.set('')
+        self.log_reserva = tk.Label(self, textvariable=self.var)
+        self.log_reserva.grid(column=2, row=6, pady=10)
 
         # visualizar a tabela de retorno
 
-        # funcoes dos clicks
-        def inserirBanco(self, codreserva, passageiro, prazo):
-            pass
+        self.listbox = Listbox(self)
+        self.listbox.grid(column=2, columnspan=12, row=7, padx=(40, 10))
+        self.listbox.configure(bg='white', width=60, borderwidth=30)
+        self.criarTabela()
+
+    def criarTabela(self):
+        self.listbox.insert(END, "    Cod Aeronave, Descrição")
+        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
+            self.listbox.insert(END, '    ' + item)
+
+    #funcoes dos clicks
+    def inserirBanco(self):
+        self.var.set('')
+        codAeronave = (self.ent_codaeronave_aernonave.get())
+        descAeronave = (self.ent_descaeronave_aernonave.get())
+
+        if codAeronave == '':
+            self.var.set('>>>Favor insira o Código da Aeronave')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+        #     insertReserva(reserva)
+        #     #mensagem log
+        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        # #else
+        #self.var.set('>>>Log do Erro')
+
+    def clickAlterar(self):
+        self.var.set('')
+        codAeronave = (self.ent_codaeronave_aernonave.get())
+        descAeronave = (self.ent_descaeronave_aernonave.get())
+
+        if codAeronave == '':
+            self.var.set('>>>Favor insira o Código da Aeronave')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     updateReserva(reserva)
+        #     self.var.set('>>>Alteração Realizada')
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+
+    def clickDeletar(self):
+        self.var.set('')
+        codAeronave = (self.ent_codaeronave_aernonave.get())
+        descAeronave = (self.ent_descaeronave_aernonave.get())
+
+        if codAeronave == '':
+            self.var.set('>>>Favor insira o Código da Aeronave')
+        # else:
+        #     reserva = Reserva(codReserva)
+        #     deleteReserva(reserva)
+
+    def clickBuscar(self):
+        self.var.set('')
+        codAeronave = (self.ent_codaeronave_aernonave.get())
+        descAeronave = (self.ent_descaeronave_aernonave.get())
+
+        if codAeronave == '':
+            self.var.set('>>>Favor insira o Código da Aeronave')
 
 
 class Tabela_Aeronave_Lugar(Toplevel):
@@ -995,23 +1199,89 @@ class Tabela_Aeronave_Lugar(Toplevel):
         # Botões /fazer o click deles
         ##command=self.inserirBanco(self.entradacodReserva, self.entradapass, self.entradaprazo) < isso vai depois do text do button, ou algo assim pra setar a func
 
-        self.botaoInserir = tk.Button(self, text=u"Inserir")  # criamos o objeto botão
+        self.botaoInserir = tk.Button(self, text=u"Inserir", command=self.inserirBanco)  # criamos o objeto botão
         self.botaoInserir.grid(column=2, row=4, padx=(160, 10), pady=5)
 
-        self.botaoAlterar = tk.Button(self, text=u"Alterar")  # criamos o objeto botão
+        self.botaoAlterar = tk.Button(self, text=u"Alterar", command=self.clickAlterar)  # criamos o objeto botão
         self.botaoAlterar.grid(column=3, row=4)
 
-        self.botaoExcluir = tk.Button(self, text=u"Excluir")  # criamos o objeto botão
+        self.botaoExcluir = tk.Button(self, text=u"Excluir", command=self.clickDeletar)  # criamos o objeto botão
         self.botaoExcluir.grid(column=2, row=5, padx=(160, 10), pady=5)
 
-        self.botaoBuscar = tk.Button(self, text=u"Buscar")  # criamos o objeto botão
+        self.botaoBuscar = tk.Button(self, text=u"Buscar", command=self.clickBuscar)  # criamos o objeto botão
         self.botaoBuscar.grid(column=3, row=5)
+
+        # log
+        self.var = StringVar()
+        self.var.set('')
+        self.log_reserva = tk.Label(self, textvariable=self.var)
+        self.log_reserva.grid(column=2, row=6, pady=10)
 
         # visualizar a tabela de retorno
 
-        # funcoes dos clicks
-        def inserirBanco(self, codreserva, passageiro, prazo):
-            pass
+        self.listbox = Listbox(self)
+        self.listbox.grid(column=2, columnspan=12, row=7, padx=(40, 10))
+        self.listbox.configure(bg='white', width=60, borderwidth=30)
+        self.criarTabela()
+
+    def criarTabela(self):
+        self.listbox.insert(END, "    Cod Aeronave, ID Assento")
+
+        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
+            self.listbox.insert(END, '    ' + item)
+
+    #funcoes dos clicks
+    def inserirBanco(self):
+        self.var.set('')
+        diaSemana = (self.ent_codaeronave_aeroLugar.get())
+        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+
+        if diaSemana == '':
+            self.var.set('>>>Favor insira o Cod da Aeronave')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+        #     insertReserva(reserva)
+        #     #mensagem log
+        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
+        # #else
+        #self.var.set('>>>Log do Erro')
+
+    def clickAlterar(self):
+        self.var.set('')
+        diaSemana = (self.ent_codaeronave_aeroLugar.get())
+        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+
+        if diaSemana == '':
+            self.var.set('>>>Favor insira o Cod da Aeronave')
+        # else:
+        #     reserva = Reserva(codReserva, passageiro, prazo)
+        #     updateReserva(reserva)
+        #     self.var.set('>>>Alteração Realizada')
+        #     self.entradacodReserva.delete(0, tk.END)
+        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
+        #     self.entradaprazo.delete(0, tk.END)
+
+    def clickDeletar(self):
+        self.var.set('')
+        diaSemana = (self.ent_codaeronave_aeroLugar.get())
+        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+
+        if diaSemana == '':
+            self.var.set('>>>Favor insira o Cod da Aeronave')
+        # else:
+        #     reserva = Reserva(codReserva)
+        #     deleteReserva(reserva)
+
+    def clickBuscar(self):
+        self.var.set('')
+        diaSemana = (self.ent_codaeronave_aeroLugar.get())
+        horaro_partida = (self.ent_idAssento_aeroLugar.get())
+
+        if diaSemana == '':
+            self.var.set('>>>Favor insira o Cod da Aeronave')
 
 
 class MainWindow(Frame):
