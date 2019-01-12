@@ -239,7 +239,7 @@ class Tabela_Reserva_Tsch(Toplevel):
             text += str(item.getCodigoReserva())+', '
             text += str(item.getNumeroAssento())+', '
             text += str(item.getIdTrecho())
-            self.listbox.insert(END, '    ' + item)
+            self.listbox.insert(END, text)
 
 #funcoes dos clicks
     def inserirBanco(self):
@@ -395,8 +395,11 @@ class Tabela_Assento(Toplevel):
     def criarTabela(self):
         self.listbox.insert(END, "    Numero Assento, Classe")
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+        for item in getAssentos():
+            text = '    '
+            text += str(item.getNumero())+', '
+            text += str(item.getClasse())
+            self.listbox.insert(END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
@@ -406,17 +409,19 @@ class Tabela_Assento(Toplevel):
         #enviar pro banco e voltar com erro ou sucesso
         #se for sucesso
         if numAssento == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        #else
-        #self.var.set('>>>Log do Erro')
+            self.var.set('>>>Favor insira o número do assento')
+        else:
+            if getAssento(numAssento) is None:
+                asse = Assento(numAssento, classe)
+                if insertAssento(asse):
+                    self.var.set('>>>Assento inserido com sucesso')
+                    self.entnmAssento.delete(0, END)
+                    self.entclasse.delete(0, END)
+                    self.criarTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Número de Assento já cadastrado')
 
     def clickAlterar(self):
         self.var.set('')
@@ -424,30 +429,56 @@ class Tabela_Assento(Toplevel):
         classe = (self.entclasse.get())
 
         if numAssento == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+            self.var.set('>>>Favor insira o número do assento')
+        else:
+            if getAssento(numAssento) is not None:
+                asse = Assento(numAssento, classe)
+                if updateAssento(asse):
+                    self.entnmAssento.delete(0, END)
+                    self.entclasse.delete(0, END)
+                    self.var.set('>>>Assento alterado com sucesso')
+                    self.criarTabela()
+                else:
+                    self.var.ser('>>>Erro')
+            else:
+                self.var.set('>>>Não existe assento com este número cadastrado')
 
     def clickDeletar(self):
         self.var.set('')
         numAssento = (self.entnmAssento.get())
         classe = (self.entclasse.get())
         if numAssento == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+            self.var.set('>>>Favor insira o número do assento')
+        else:
+            if getAssento(numAssento):
+                asse = Assento(numAssento, classe)
+                if deleteAssento(asse):
+                    self.entnmAssento.delete(0, END)
+                    self.entclasse.delete(0, END)
+                    self.var.set('>>>Assento deletado com sucesso')
+                    self.criarTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Não existe assento com este número cadastrado')
+
 
     def clickBuscar(self):
         self.var.set('')
         numAssento = (self.entnmAssento.get())
         classe = (self.entclasse.get())
-        #enviar o comando pro banco e listar na lista de baixo
+        if numAssento == '':
+            self.var.set('>>>Favor insira o número do assento')
+        else:
+            asse = getAssento(numAssento)
+            if asse is not None:
+                self.entnmAssento.delete(0, END)
+                self.entclasse.delete(0, END)
+                self.entnmAssento.insert(0, asse.getNumero())
+                self.entclasse.insert(0, asse.getClasse())
+                self.var.set('>>>Assento encontrado com sucesso')
+            else:
+                self.var.set('>>>Não existe assento com esse número cadastrado')
 
 
 class Tabela_Horario(Toplevel):
@@ -513,10 +544,20 @@ class Tabela_Horario(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Dia, Hr Partida, Hr Chegada, Trecho")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    Dia da Semana, Hr Partida, Hr Chegada, Trecho")
+        lista = getHorarios()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getDiaSemana()) + ', '
+            text += str(item.getHorarioPartida()) + ', '
+            text += str(item.getHorarioChegada()) + ', '
+            text += str(item.getIdTrecho())
+            self.listbox.insert(tk.END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
@@ -525,20 +566,24 @@ class Tabela_Horario(Toplevel):
         horaro_partida = (self.enhorarioPartida.get())
         horario_chegada = (self.enthrChegada.get())
         trecho = (self.entTrecho_horario.get()) #fk
-        #enviar pro banco e voltar com erro ou sucesso
-        #se for sucesso
-        if diaSemana == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END) # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
-        #     insertReserva(reserva)
-        #     #mensagem log
-        #     self.var.set('>>>Cadastro Concluido')#alterar para só funcionar se inserir mesmo
-        # #else
-        #self.var.set('>>>Log do Erro')
+        if diaSemana == '' or trecho == '':
+            self.var.set('>>>Favor insira o dia da semana e o id do trecho')
+        else:
+            if getHorario(diaSemana) is None:
+                hor = Horario(diaSemana, horaro_partida, horario_chegada, trecho)
+                if insertHorario(hor):
+                    self.var.set('>>>Horario cadastrado com sucesso')
+                    self.entdiaSemana.delete(0, END)
+                    self.enhorarioPartida.delete(0, END)
+                    self.enthrChegada.delete(0, END)
+                    self.entTrecho_horario.delete(0, END)
+                    self.criarTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Dia da semana já cadastrado')
+
+
 
     def clickAlterar(self):
         self.var.set('')
@@ -546,15 +591,23 @@ class Tabela_Horario(Toplevel):
         horaro_partida = (self.enhorarioPartida.get())
         horario_chegada = (self.enthrChegada.get())
         trecho = (self.entTrecho_horario.get())  # fk
-        if diaSemana == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva, passageiro, prazo)
-        #     updateReserva(reserva)
-        #     self.var.set('>>>Alteração Realizada')
-        #     self.entradacodReserva.delete(0, tk.END)
-        #     self.entradapass.delete(0, tk.END)  # apaga o campo destino
-        #     self.entradaprazo.delete(0, tk.END)
+        if diaSemana == '' or trecho == '':
+            self.var.set('>>>Favor insira o dia da semana e o trecho')
+        else:
+            if getHorario(diaSemana) is not None:
+                hor = Horario(diaSemana, horaro_partida, horario_chegada, trecho)
+                if updateHorario(hor):
+                    self.var.set('>>>Horario atualizado com sucesso')
+                    self.entdiaSemana.delete(0, END)
+                    self.enhorarioPartida.delete(0, END)
+                    self.enthrChegada.delete(0, END)
+                    self.entTrecho_horario.delete(0, END)
+                    self.criarTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Não exite horario cadastrado para esse dia da semana')
+
 
     def clickDeletar(self):
         self.var.set('')
@@ -563,10 +616,20 @@ class Tabela_Horario(Toplevel):
         horario_chegada = (self.enthrChegada.get())
         trecho = (self.entTrecho_horario.get())  # fk
         if diaSemana == '':
-            self.var.set('>>>Favor insira o Código da reserva')
-        # else:
-        #     reserva = Reserva(codReserva)
-        #     deleteReserva(reserva)
+            self.var.set('>>>Favor insira o dia da semana')
+        else:
+            if getHorario(diaSemana) is not None:
+                hor = Horario(diaSemana, horaro_partida, horario_chegada, trecho)
+                if deleteHorario(hor):
+                    self.entdiaSemana.delete(0, END)
+                    self.enhorarioPartida.delete(0, END)
+                    self.enthrChegada.delete(0, END)
+                    self.entTrecho_horario.delete(0, END)
+                    self.criarTabela()
+                else:
+                    self.var.set('>>>Erro')
+            else:
+                self.var.set('>>>Não exite horario cadastrado para esse dia da semana')
 
     def clickBuscar(self):
         self.var.set('')
@@ -574,7 +637,22 @@ class Tabela_Horario(Toplevel):
         horaro_partida = (self.enhorarioPartida.get())
         horario_chegada = (self.enthrChegada.get())
         trecho = (self.entTrecho_horario.get())  # fk
-        #enviar o comando pro banco e listar na lista de baixo
+        if diaSemana == '':
+            self.var.set('>>>Favor insira o dia da semana')
+        else:
+            asse = getHorario(diaSemana)
+            if asse is not None:
+                self.entdiaSemana.delete(0, END)
+                self.enhorarioPartida.delete(0, END)
+                self.enthrChegada.delete(0, END)
+                self.entTrecho_horario.delete(0, END)
+                self.entdiaSemana.insert(0, asse.getDiaSemana())
+                self.enhorarioPartida.insert(0, asse.setHorarioPartida())
+                self.enthrChegada.insert(0, asse.getHorarioChegada())
+                self.entTrecho_horario.insert(0, asse.getIdTrecho())
+                self.var.set('>>>Busca concluida com sucesso')
+            else:
+                self.var.set('>>>Não foi encontrado nenhum horario cadastrado nesse dia da semana')
 
 
 class Tabela_Voo(Toplevel):
@@ -624,10 +702,18 @@ class Tabela_Voo(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Voo")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    Numero Vôo")
+        lista = getVoos()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getNumero())
+
+            self.listbox.insert(tk.END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
@@ -749,10 +835,21 @@ class Tabela_Trecho(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Trecho, Hr Partida, Aeronave, Origem,Destino")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    Trecho, Numero Vôo, Aeronave, Origem, Destino")
+        lista = getTrechos()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getIdTrecho()) + ', '
+            text += str(item.getNumeroVoo()) + ', '
+            text += str(item.getCodigoAeronave()) + ', '
+            text += str(item.getAeroportoOrigem()) + ', '
+            text += str(item.getAeroportoDestino())
+            self.listbox.insert(tk.END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
@@ -881,10 +978,19 @@ class Tabela_Aeroporto(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Cod Aeroporto, Nome Aeroporto, Cidade Aeroporto")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    Cod Aeroporto, Nome Aeroporto, Cidade Aeroporto")
+        lista = getAeroportos()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getCodigo()) + ', '
+            text += str(item.getNome()) + ', '
+            text += str(item.getCodigoCidade())
+            self.listbox.insert(tk.END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
@@ -1000,10 +1106,19 @@ class Tabela_Cidade(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "     ID, Cidade, Pais")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    ID, Cidade, País")
+        lista = getCidades()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getCodigo()) + ', '
+            text += str(item.getNome()) + ', '
+            text += str(item.getPais())
+            self.listbox.insert(tk.END, text)
 
         # funcoes dos clicks
         def inserirBanco(self, codreserva, passageiro, prazo):
@@ -1114,9 +1229,18 @@ class Tabela_Aeronave(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Cod Aeronave, Descrição")
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+        self.updateTabela()
+
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    código Aeronave, Descrição")
+        lista = getTipoAeronaves()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getCodigo()) + ', '
+            text += str(item.getDescricao())
+            self.listbox.insert(tk.END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
@@ -1225,10 +1349,18 @@ class Tabela_Aeronave_Lugar(Toplevel):
         self.criarTabela()
 
     def criarTabela(self):
-        self.listbox.insert(END, "    Cod Aeronave, ID Assento")
+        self.updateTabela()
 
-        for item in ["one", "two", "three", "four", "", "", "a", "b", "c", "d", "e"]:
-            self.listbox.insert(END, '    ' + item)
+    def updateTabela(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, "    código Aeronave, ID Assento")
+        lista = getTipoAeronaveAssentos()
+
+        for item in lista:
+            text = '    '
+            text += str(item.getCodAeronave()) + ', '
+            text += str(item.getIdAssento())
+            self.listbox.insert(tk.END, text)
 
     #funcoes dos clicks
     def inserirBanco(self):
